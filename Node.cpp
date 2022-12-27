@@ -5,11 +5,6 @@ Node::Node() : m_player(nullptr), m_next(nullptr), m_parent(nullptr), m_team(nul
 Node::Node(shared_ptr<Player> player) : m_player(player), m_next(nullptr), m_parent(nullptr),
 m_team(nullptr) {}
 
-Node::~Node()
-{
-    delete m_next;
-}
-
 Node& Node::operator=(const Node &other)
 {
     if(this == &other){

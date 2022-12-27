@@ -31,7 +31,7 @@ public:
     int getOccupancy() const;
 
     void insertElement(shared_ptr<Player> player, std::shared_ptr<Team> playerTeam);
-    Node* findElement(int key) const;
+    Node* findElement(int playerId) const;
     void printHash();
 
 };

@@ -20,7 +20,7 @@ private:
 public:
     Node();
     explicit Node(shared_ptr<Player> other);
-    ~Node();
+    ~Node() = default;
     Node& operator=(const Node& other);
     //getters and setters
     shared_ptr<Player> getPlayer() const;
