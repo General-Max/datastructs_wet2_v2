@@ -10,7 +10,7 @@ Node::~Node()
     delete m_next;
 }
 
-Node& Node::operator=(Node &other)
+Node& Node::operator=(const Node &other)
 {
     if(this == &other){
         return *this;
@@ -20,6 +20,7 @@ Node& Node::operator=(Node &other)
     this->m_team = other.m_team;
     this->m_parent=other.m_parent;
     //this->m_buyingTeamSpirit = other.m_buyingTeamSpirit;
+    return *this;
 }
 
 //getters and setters

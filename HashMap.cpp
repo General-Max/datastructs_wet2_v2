@@ -10,9 +10,9 @@ HashMap::HashMap() : m_data(new Node*[INITIAL_SIZE]), m_size(INITIAL_SIZE), m_oc
 
 int HashMap::HashFunction(int key) const
 {
-    double p=0;
-    double x = std::modf(COEFFICIENT*key, &p);
-    return std::floor(m_size*x);
+    double fracPart = COEFFICIENT*key -(int)(COEFFICIENT*key);
+    int floored = (int)(fracPart*m_size);
+    return floored;
 }
 
 HashMap::~HashMap()
@@ -54,25 +54,43 @@ void HashMap::insertElement(shared_ptr<Player> player, std::shared_ptr<Team> pla
     if(m_data[index] != nullptr){
         newNode->setNext(m_data[index]);
     }
+    else{
+        m_occupancy++;
+    }
     m_data[index] = newNode;
 }
 void HashMap::expand()
 {
-    Node** newData = new Node*[m_size*RATE];
+    int oldSize = m_size;
+    Node** newDataArray = new Node*[oldSize*RATE];
+    for(int i=0;i<oldSize*RATE;i++){
+        newDataArray[i] = nullptr;
+    }
     Node* temp;
     Node** oldArray = m_data;
-    m_data = newData;
-    int oldSize = m_size;
+    m_data = newDataArray;
     m_size*=RATE;
+    m_occupancy=0;
     for(int i=0;i<oldSize;i++){
-        temp = m_data[i];
+        temp = oldArray[i];
         while(temp!= nullptr){
             insertElement(temp->getPlayer(), temp->getTeam());
             temp = temp->getNext();
         }
     }
+
+    Node* toDelete;
+    for(int i=0;i <oldSize; i++){
+        toDelete = oldArray[i];
+        while(toDelete!= nullptr){
+            temp = toDelete->getNext();
+            delete toDelete;
+            toDelete = temp;
+        }
+    }
     delete[] oldArray;
-}
+
+ }
 
 Node* HashMap::findElement(int playerId) const
 {
@@ -92,10 +110,12 @@ void HashMap::printHash()
     Node* temp;
     for(int i=0;i<m_size;i++){
         temp = m_data[i];
+        std::cout << "["<<i<<"]: ";
         while(temp!= nullptr){
-            std::cout << "player: " << temp->getPlayer()->getPlayerId() << std::endl;
+            std::cout << "player: " << temp->getPlayer()->getPlayerId() << "->";
             temp = temp->getNext();
         }
-        std::cout << "end position " << i << " in the array" << std::endl;
+        std::cout << "||" << std::endl;
+        //std::cout << "end position " << i << " in the array" << std::endl;
     }
 }

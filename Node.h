@@ -19,9 +19,9 @@ private:
 
 public:
     Node();
-    Node(shared_ptr<Player> other);
+    explicit Node(shared_ptr<Player> other);
     ~Node();
-    Node& operator=(Node& other);
+    Node& operator=(const Node& other);
     //getters and setters
     shared_ptr<Player> getPlayer() const;
     void setPlayer(shared_ptr<Player> p);

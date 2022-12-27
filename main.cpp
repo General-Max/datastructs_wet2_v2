@@ -14,26 +14,33 @@ using std::endl;
 
 int main()
 {
-    shared_ptr<Team> t1 = std::make_shared<Team>(1);
-    shared_ptr<Team> t2 = std::make_shared<Team>(2);
-    shared_ptr<Team> t3 = std::make_shared<Team>(3);
-    shared_ptr<Team> t4 = std::make_shared<Team>(4);
-    shared_ptr<Team> t5 = std::make_shared<Team>(5);
+//    shared_ptr<Team> t1 = std::make_shared<Team>(1);
+//    shared_ptr<Team> t2 = std::make_shared<Team>(2);
+//    shared_ptr<Team> t3 = std::make_shared<Team>(3);
+//    shared_ptr<Team> t4 = std::make_shared<Team>(4);
+//    shared_ptr<Team> t5 = std::make_shared<Team>(5);
+//
+//    shared_ptr<Player> p1 = std::make_shared<Player>(1,1, per,1,1,1,false);
+//    shared_ptr<Player> p2 = std::make_shared<Player>(2,1, per,1,1,1,false);
+//    shared_ptr<Player> p3 = std::make_shared<Player>(3,1, per, 1,1,1,false);
+//    shared_ptr<Player> p4 = std::make_shared<Player>(4,1, per,1,1,1,false);
+//    shared_ptr<Player> p5 = std::make_shared<Player>(5,1, per,1,1,1,false);
 
     permutation_t per= permutation_t();
-    shared_ptr<Player> p1 = std::make_shared<Player>(1,1, per,1,1,1,false);
-    shared_ptr<Player> p2 = std::make_shared<Player>(2,1, per,1,1,1,false);
-    shared_ptr<Player> p3 = std::make_shared<Player>(3,1, per, 1,1,1,false);
-    shared_ptr<Player> p4 = std::make_shared<Player>(4,1, per,1,1,1,false);
-    shared_ptr<Player> p5 = std::make_shared<Player>(5,1, per,1,1,1,false);
-
 
     HashMap h = HashMap();
-    h.insertElement(p1,t1);
-    h.insertElement(p2,t2);
-    h.insertElement(p3,t3);
-    h.insertElement(p4,t4);
-    h.insertElement(p5,t5);
+    //not double insertion proof
+    for(int i=1;i<50;i++){
+        shared_ptr<Team> t1 = std::make_shared<Team>(i);
+        shared_ptr<Player> p1 = std::make_shared<Player>(i,1, per,1,1,1,false);
+        h.insertElement(p1,t1);
+
+    }
+//    h.insertElement(p1,t1);
+//    h.insertElement(p2,t2);
+//    h.insertElement(p3,t3);
+//    h.insertElement(p4,t4);
+//    h.insertElement(p5,t5);
 
     h.printHash();
 
