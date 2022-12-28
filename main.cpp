@@ -14,6 +14,7 @@ using std::cout;
 using std::endl;
 
 const int SIZE = 100000;
+const int SIZE_UNION = 100000;
 
 //functions
 void testHashInsert(HashMap* h);
@@ -22,33 +23,20 @@ void testHashOccupancy(HashMap* h);
 void testHashMap();
 void testUnionFind();
 void testUFInsert(UnionFind* u);
+void testFindPlayerInUnion(UnionFind* u);
+void testFindTeamInUnion(UnionFind* u);
 
 
 int main()
 {
-
     testHashMap();
-
     testUnionFind();
-
-/*
-    cout << "----------------TEST5----------------" << endl;
-    AVLTree<int, SortRegular> tree = AVLTree<int, SortRegular>();
-    tree.insert(5);
-    for(int i=0;i<9;i++){
-        tree.insert(i);
-    }
-    for(int i=20;i>10;i--){
-        tree.insert(i);
-    }
-    tree.printD(tree.getRoot(), 10);
-    tree.printH(tree.getRoot(), 10);
-*/
 
     return 0;
 }
 
-void testHashInsert(HashMap* h){
+void testHashInsert(HashMap* h)
+{
     cout << "--------------------------insertion test--------------------------" << endl;
     bool insertTest = true;
     permutation_t per= permutation_t();
@@ -71,7 +59,8 @@ void testHashInsert(HashMap* h){
     }
 }
 
-void testHashFind(HashMap* h){
+void testHashFind(HashMap* h)
+{
     cout << "--------------------------finding test--------------------------" << endl;
     bool findTest = true;
     for(int i=1;i<SIZE;i++){
@@ -95,7 +84,8 @@ void testHashFind(HashMap* h){
     }
 }
 
-void testHashOccupancy(HashMap* h){
+void testHashOccupancy(HashMap* h)
+{
     cout << "--------------------------size and occupancy test--------------------------" << endl;
     bool sizeAndOccupancyTest = true;
     int hashSize = h->getSize();
@@ -113,7 +103,8 @@ void testHashOccupancy(HashMap* h){
     }
 }
 
-void testHashMap(){
+void testHashMap()
+{
 
     cout << "------------------------------------\n";
     cout << "-----------HashMap test-------------\n";
@@ -135,24 +126,71 @@ void testHashMap(){
 
 }
 
-void testUnionFind(){
+void testUnionFind()
+{
 
     cout << "--------------------------------------\n";
     cout << "-----------UnionFind test-------------\n";
     cout << "--------------------------------------\n";
 
-    UnionFind* group = new UnionFind();
+    UnionFind* u = new UnionFind();
 
-    testUFInsert(group);
+    testUFInsert(u);
+    testFindPlayerInUnion(u);
+    testFindTeamInUnion(u);
 
-    delete group;
+    delete u;
 }
 
-void testUFInsert(UnionFind* u){
+void testUFInsert(UnionFind* u)
+{
     permutation_t per= permutation_t();
 
-    shared_ptr<Team> t1 = std::make_shared<Team>(1);
-    shared_ptr<Player> p1 = std::make_shared<Player>(1,1, per,1,1,1,false);
+    for(int i=1;i<SIZE_UNION;i++){
+        shared_ptr<Team> t1 = std::make_shared<Team>(i);
+        shared_ptr<Player> p1 = std::make_shared<Player>(i,1, per,1,1,1,false);
+        u->makeSet(p1,t1);
+    }
 
-    u->makeSet(p1,t1);
+}
+
+//should find all the players later, later not necessarily will find all the teams
+void testFindPlayerInUnion(UnionFind* u)
+{
+    cout << "--------------------------finding Player test--------------------------" << endl;
+    bool findTest = true;
+
+    for(int i=1;i<SIZE_UNION;i++){
+        int x = u->findPlayer(i)->getPlayerId();
+        if(x != i){
+            findTest = false;
+        }
+    }
+
+    if(findTest){
+        cout << "find players Test Passed :)" << endl;
+    }
+    else{
+        cout << "find Test Failed :(" << endl;
+    }
+}
+
+void testFindTeamInUnion(UnionFind* u)
+{
+    cout << "--------------------------finding Team test--------------------------" << endl;
+    bool findTest = true;
+
+    for(int i=1;i<SIZE_UNION;i++){
+        int x = u->findPlayerTeam(i)->getTeamId();
+        if(x != i){
+            findTest = false;
+        }
+    }
+
+    if(findTest){
+        cout << "find team Test Passed :)" << endl;
+    }
+    else{
+        cout << "find Test Failed :(" << endl;
+    }
 }
