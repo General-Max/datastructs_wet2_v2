@@ -17,12 +17,16 @@ int HashMap::HashFunction(int key) const
 
 HashMap::~HashMap()
 {
-    for (int i=0; i<m_size; i++){
-        if(m_data[i]!=nullptr){
-            delete m_data[i];
+    Node* toDelete;
+    Node* temp;
+    for(int i=0;i <m_size; i++){
+        toDelete = m_data[i];
+        while(toDelete!= nullptr){
+            temp = toDelete->getNext();
+            delete toDelete;
+            toDelete = temp;
         }
     }
-
     delete[] m_data;
 }
 
@@ -43,7 +47,7 @@ void HashMap::insertElement(shared_ptr<Player> player, std::shared_ptr<Team> pla
         expand();
     }
     int key = player->getPlayerId();
-
+    m_occupancy++;
     Node* newNode = new Node(player);
 
     // in case it is the root of the inverse tree
@@ -54,9 +58,7 @@ void HashMap::insertElement(shared_ptr<Player> player, std::shared_ptr<Team> pla
     if(m_data[index] != nullptr){
         newNode->setNext(m_data[index]);
     }
-    else{
-        m_occupancy++;
-    }
+
     m_data[index] = newNode;
 }
 void HashMap::expand()
