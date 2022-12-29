@@ -194,3 +194,23 @@ void testFindTeamInUnion(UnionFind* u)
         cout << "find Test Failed :(" << endl;
     }
 }
+
+void testUniteUnion(UnionFind* u)
+{
+    cout << "--------------------------finding Team test--------------------------" << endl;
+    bool findTest = true;
+
+    for(int i=1;i<SIZE_UNION;i++){
+        int x = u->findPlayerTeam(i)->getTeamId();
+        if(x != i){
+            findTest = false;
+        }
+    }
+
+    if(findTest){
+        cout << "find team Test Passed :)" << endl;
+    }
+    else{
+        cout << "find Test Failed :(" << endl;
+    }
+}
