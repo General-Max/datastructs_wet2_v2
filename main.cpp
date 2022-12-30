@@ -141,6 +141,7 @@ void testUnionFind()
     testFindTeamInUnion(u);
     testFindTeamInUnion(u);
     testFindTeamInUnion(u);
+    testFindTeamInUnion(u);
     testFindPlayerInUnion(u);
     testFindPlayerInUnion(u);
     testFindPlayerInUnion(u);
