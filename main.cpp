@@ -136,8 +136,26 @@ void testUnionFind()
 
     testUFInsert(u);
     testFindPlayerInUnion(u);
-    testFindTeamInUnion(u);
-    testUniteUnion(u);
+//    testFindTeamInUnion(u);
+//    testFindTeamInUnion(u);
+//    testFindTeamInUnion(u);
+//    testFindTeamInUnion(u);
+//    testFindTeamInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+    testFindPlayerInUnion(u);
+
+    //testUniteUnion(u);
 
     delete u;
 }
