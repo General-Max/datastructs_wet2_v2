@@ -150,6 +150,7 @@ void testUFInsert(UnionFind* u)
         shared_ptr<Team> t1 = std::make_shared<Team>(i);
         shared_ptr<Player> p1 = std::make_shared<Player>(i, per,1,1,1,false);
         u->makeSet(p1,t1);
+        u->addPlayerToTeam(p1, t1);
     }
 
 }
