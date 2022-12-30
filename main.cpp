@@ -1,10 +1,8 @@
 //
 
 #include <iostream>
-//#include "DynamicArray.h"
 //#include "AVLRankTree.h"
 //#include "sortRegular.h"
-//#include "LinkedList.h"
 #include "HashMap.h"
 #include "Player.h"
 #include "Team.h"
@@ -14,7 +12,7 @@ using std::cout;
 using std::endl;
 
 const int SIZE = 100000;
-const int SIZE_UNION = 100000;
+const int SIZE_UNION = 4+1;
 
 //functions
 void testHashInsert(HashMap* h);
@@ -25,11 +23,12 @@ void testUnionFind();
 void testUFInsert(UnionFind* u);
 void testFindPlayerInUnion(UnionFind* u);
 void testFindTeamInUnion(UnionFind* u);
+void testUniteUnion(UnionFind* u);
 
 
 int main()
 {
-    testHashMap();
+    //testHashMap();
     testUnionFind();
 
     return 0;
@@ -138,6 +137,7 @@ void testUnionFind()
     testUFInsert(u);
     testFindPlayerInUnion(u);
     testFindTeamInUnion(u);
+    testUniteUnion(u);
 
     delete u;
 }
@@ -198,11 +198,17 @@ void testFindTeamInUnion(UnionFind* u)
 
 void testUniteUnion(UnionFind* u)
 {
-    cout << "--------------------------finding Team test--------------------------" << endl;
+    cout << "--------------------------finding Team after U test--------------------------" << endl;
     bool findTest = true;
 
-    for(int i=1;i<SIZE_UNION;i++){
-        int x = u->findPlayerTeam(i)->getTeamId();
+    for(int i=1;i<SIZE_UNION/2;i++){
+        shared_ptr<Team> t1 = std::make_shared<Team>(i);
+        shared_ptr<Team> t2 = std::make_shared<Team>(i+SIZE_UNION/2);
+        u->unionTeams(t1, t2);
+    }
+/*
+    for(int i=1;i<SIZE_UNION/2;i++){
+        int x = u->findPlayerTeam(i+SIZE_UNION/2)->getTeamId();
         if(x != i){
             findTest = false;
         }
@@ -213,5 +219,5 @@ void testUniteUnion(UnionFind* u)
     }
     else{
         cout << "find Test Failed :(" << endl;
-    }
+    }*/
 }
