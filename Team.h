@@ -3,6 +3,7 @@
 
 #include <ostream>
 #include "Node.h"
+
 using std::ostream;
 class Node;
 
@@ -31,11 +32,6 @@ public:
     int getPoints() const;
 
     /**
-     * @return the nu,ber of games that the players of the team has played together
-     */
-    int getPlayedTogether() const;
-
-    /**
      * @return the number of players in the team
      */
     int getNumOfPlayers() const;
@@ -45,6 +41,11 @@ public:
      */
     int getTotalPlayersAbility() const;
 
+    /**
+     * set a new new total players ability of the team
+     * @param newTotalPlayersAbility
+     */
+    void setTotalPlayersAbility(int newTotalPlayersAbility);
     /**
      * @return the team's score, computed by:
      * the points plus the sum of abilities of all the players
@@ -79,21 +80,11 @@ public:
     void setTeamSpirit(permutation_t newTeamSpirit);
 
     /**
-     * increase the number of games that the players played together by one
-     */
-    void increasePlayedTogether();
-
-    /**
      * insert a new player to the team and updates the params of the fields
      * @param player a new player
      */
-    // void insertPlayer(const shared_ptr<Player>& player);
+     void insertPlayer(const shared_ptr<Player>& player);
 
-    /**
-     * remove a player from the team and updates the values of the fields
-     * @param player
-     */
-    //void removePLayer(shared_ptr<Player> player);
 
     /**
      * @return if there aren't any players in the team
@@ -114,16 +105,32 @@ public:
      */
     friend ostream& operator<<(ostream& os, const Team& team);
 
+    /**
+     *
+     * @return true if the team is still in the game (wasn't bought or removed)
+     */
+    bool getIsInGame() const;
+
+    /**
+     * change the participation status of the team
+     * @param isInGame
+     */
+    void setIsInGame(bool isInGame);
+
+   /* shared_ptr<PLayer> getNewestPlayer() const;
+
+    void setNewestPlayer(shared_ptr<Player>& newPlayer);*/
 private:
     int m_teamId;
     int m_points;
-    int m_playedTogether;
     int m_numOfPlayers;
     int m_totalPlayersAbility;
     int m_totalCards;
     int m_goalkeepers;
     Node* m_rootInTree;
     permutation_t m_teamSpirit;
+    bool m_isInGame;
+  //  shared_ptr<Player> m_newestPlayer;
 };
 
 #endif //WET2_TEAM_H

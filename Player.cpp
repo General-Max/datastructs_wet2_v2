@@ -1,17 +1,13 @@
 #include "Player.h"
 
-Player::   Player(int playerId, int teamId, const permutation_t& spirit, int gamesPlayed, int ability, int cards, bool goalkeeper)
+Player::   Player(int playerId, const permutation_t& spirit, int gamesPlayed, int ability, int cards, bool goalkeeper)
         : m_playerId(playerId),
-        m_teamId(teamId), m_spirit(spirit), m_gamesPlayed(gamesPlayed),
+        m_spirit(spirit), m_gamesPlayed(gamesPlayed),
         m_ability(ability), m_cards(cards),
         m_goalKeeper(goalkeeper){}
 
 int Player::getPlayerId() const {
     return this->m_playerId;
-}
-
-int Player::getTeamId() const {
-    return this->m_teamId;
 }
 
 int Player::getGamesPlayed() const {
@@ -28,7 +24,7 @@ int Player::getCards() const {
 
 ostream& operator<<(ostream& os, const Player& player)
 {
-    os << "player id: " <<  player.getPlayerId() << ", team: " << player.getTeamId() << ", cards: "
+    os << "player id: " <<  player.getPlayerId() <<  ", cards: "
        << player.getCards();
     return os;
 }
@@ -49,6 +45,20 @@ permutation_t Player::getSpirit(){
     return m_spirit;
 }
 
-void Player::setSpirit(permutation_t newSpirit) {
+void Player::setSpirit(const permutation_t& newSpirit) {
     this->m_spirit = newSpirit;
 }
+
+void Player::setGamedPlayed(int newTotalGames) {
+    this->m_gamesPlayed = newTotalGames;
+}
+
+int Player::getAbility() const {
+    return this->m_ability;
+}
+
+void Player::setPlayerAbility(int newPlayerAbility) {
+    this->m_ability = newPlayerAbility;
+}
+
+

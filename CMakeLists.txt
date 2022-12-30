@@ -22,6 +22,10 @@ add_executable(wet2
         Player.h
         sortRegular.cpp
         sortRegular.h
+        SortByAbility.h
+        SortByAbility.cpp
+        SortTeamById.h
+        SortTeamById.cpp
         wet2util.h
         worldcup23a2.cpp
         worldcup23a2.h)

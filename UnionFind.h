@@ -19,5 +19,6 @@ public:
     void unionTeams(shared_ptr<Team> boughtTeam, shared_ptr<Team> buyerTeam);
     shared_ptr<Player> findPlayer(int playerId);
     shared_ptr<Team> findPlayerTeam(int playerId);
+    void addPlayerToTeam(shared_ptr<Player> player, shared_ptr<Team> team);
 };
 #endif //WET2_UNIONFIND_H

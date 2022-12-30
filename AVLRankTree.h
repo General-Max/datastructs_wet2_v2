@@ -54,7 +54,7 @@ public:
      * @return
      */
     template<class S>
-    T* find(const S &data) const;
+    T find(const S &data) const;
 
     /**
      * remove the node that contains the given data
@@ -69,7 +69,7 @@ public:
      * @param index the index of the wanted node
      * @return the element in the given index
      */
-    T* select(int index) const;
+    T select(int index) const;
 
     /**
      * @return the number of elements in the tree
@@ -323,12 +323,12 @@ void AVLTree<T, Comparison>::insert(T data) {
 
 template<class T, class Comparison>
 template<class S>
-T* AVLTree<T, Comparison>::find(const S& data) const{
+T AVLTree<T, Comparison>::find(const S& data) const{
     BinNode* node = findNode(m_root, data);
     if(node == nullptr){
         return nullptr;
     }
-    return &(node->m_data);
+    return (node->m_data);
 }
 
 template<class T, class Comparison>
@@ -352,12 +352,12 @@ void AVLTree<T, Comparison>::remove(const S& data) {
 }
 
 template<class T, class Comparison>
-T* AVLTree<T, Comparison>::select(int index) const{
+T AVLTree<T, Comparison>::select(int index) const{
     BinNode* node = selectNode(m_root, index);
     if(node == nullptr){
         return nullptr;
     }
-    return &(node->m_data);
+    return (node->m_data);
 }
 
 template<class T, class Comparison>

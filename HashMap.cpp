@@ -53,6 +53,7 @@ void HashMap::insertElement(shared_ptr<Player> player, std::shared_ptr<Team> pla
     // in case it is the root of the inverse tree
     if((playerTeam->getNumOfPlayers())==0){
         newNode->setTeam(playerTeam);
+        playerTeam->setRootInTree(newNode);
     }
     int index = HashFunction(key);
     if(m_data[index] != nullptr){
@@ -61,6 +62,7 @@ void HashMap::insertElement(shared_ptr<Player> player, std::shared_ptr<Team> pla
 
     m_data[index] = newNode;
 }
+
 void HashMap::expand()
 {
     int oldSize = m_size;

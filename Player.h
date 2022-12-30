@@ -20,7 +20,7 @@ public:
     * @param cards
     * @param goalkeeper
     */
-   Player(int playerId, int teamId, const permutation_t& spirit, int gamesPlayed, int ability, int cards, bool goalkeeper);
+   Player(int playerId, const permutation_t& spirit, int gamesPlayed, int ability, int cards, bool goalkeeper);
 
     /**
      * destructor of player
@@ -31,11 +31,6 @@ public:
      * @return the id of the player
      */
     int getPlayerId() const;
-
-    /**
-     * @return the id of the team that the player belongs to
-     */
-    int getTeamId() const;
 
     /**
      * @return the number of games the player has played
@@ -52,6 +47,10 @@ public:
      */
     bool getGoalKeeper() const;
 
+    int getAbility() const;
+
+    void setPlayerAbility(int newPlayerAbility);
+
     /**
      * prints this player details
      * @param os
@@ -65,6 +64,12 @@ public:
      * @param newGamedNumber
      */
     void updateGamesPlayed(int newGamedNumber);
+
+    /**
+     * sets the new games that the player played (not the ream number but ana uax games played)
+     * @param newTotalGames
+     */
+    void setGamedPlayed(int newTotalGames);
 
     /**
      * add the new games number to the current one
@@ -88,11 +93,10 @@ public:
      * update the spirit of the player
      * @param newSpirit
      */
-    void setSpirit(permutation_t newSpirit);
+    void setSpirit(const permutation_t& newSpirit);
 
 private:
     int m_playerId;
-    int m_teamId;
     permutation_t m_spirit;
     int m_gamesPlayed;
     int m_ability;

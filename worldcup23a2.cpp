@@ -2,7 +2,7 @@
 
 world_cup_t::world_cup_t()
 {
-	// TODO: Your code goes here
+	// TODO: Your code goes h
 }
 
 world_cup_t::~world_cup_t()
@@ -12,13 +12,40 @@ world_cup_t::~world_cup_t()
 
 StatusType world_cup_t::add_team(int teamId)
 {
-	// TODO: Your code goes here
+	if(teamId<=0){
+        return StatusType::INVALID_INPUT;
+    }
+    if(teamsTreeById.find(teamId) != nullptr){
+        return StatusType::FAILURE;
+    }
+    try{
+        shared_ptr<Team> newTeam = std::make_shared<Team>(teamId);
+        teamsTreeById.insert(newTeam);
+        teamsTreeByAbility.insert(newTeam);
+    }
+    catch(...){
+        return StatusType::ALLOCATION_ERROR;
+    }
 	return StatusType::SUCCESS;
 }
 
 StatusType world_cup_t::remove_team(int teamId)
 {
-	// TODO: Your code goes here
+    if(teamId<=0){
+        return StatusType::INVALID_INPUT;
+    }
+    shared_ptr<Team> teamToDelete = teamsTreeById.find(teamId);
+    if(teamToDelete == nullptr){
+        return StatusType::FAILURE;
+    }
+    try{
+        teamToDelete->setIsInGame(false);
+        teamsTreeById.remove(teamToDelete);
+        teamsTreeByAbility.remove(teamToDelete);
+    }
+    catch(...){
+        return StatusType::ALLOCATION_ERROR;
+    }
 	return StatusType::FAILURE;
 }
 
@@ -26,7 +53,24 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
                                    const permutation_t &spirit, int gamesPlayed,
                                    int ability, int cards, bool goalKeeper)
 {
-	// TODO: Your code goes here
+	if(playerId <= 0 || teamId <= 0 || !spirit.isvalid() || gamesPlayed < 0 || cards < 0){
+        return StatusType::INVALID_INPUT;
+    }
+    shared_ptr<Team> playerTeam = teamsTreeById.find(playerId);
+    shared_ptr<Player> player = playersSets.findPlayer(playerId);
+    if((player != nullptr) || (playerTeam== nullptr)){
+        return StatusType::FAILURE;
+    }
+    try{
+        player = std::make_shared<Player>(playerId, spirit, gamesPlayed, ability, cards, goalKeeper);
+        playersSets.makeSet(player, playerTeam);
+        playersSets.addPlayerToTeam(player, playerTeam);
+        playerTeam->insertPlayer(player);
+    }
+    catch(...){
+        return StatusType::ALLOCATION_ERROR;
+    }
+
 	return StatusType::SUCCESS;
 }
 

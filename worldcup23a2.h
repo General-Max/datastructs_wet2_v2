@@ -16,13 +16,20 @@
 #define WORLDCUP23A2_H_
 
 #include "wet2util.h"
+#include "UnionFind.h"
+#include "AVLRankTree.h"
+#include "SortTeamById.h"
+#include "SortByAbility.h"
 
 class world_cup_t {
 private:
 	//
 	// Here you may add anything you want
 	//
-	
+    AVLTree<shared_ptr<Team>, SortByAbility> teamsTreeByAbility;
+    AVLTree<shared_ptr<Team>, SortTeamById> teamsTreeById;
+    UnionFind playersSets;
+
 public:
 	// <DO-NOT-MODIFY> {
 	

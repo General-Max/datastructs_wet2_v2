@@ -2,8 +2,9 @@
 
 #include "Team.h"
 
-Team::Team(int teamId) : m_teamId(teamId), m_points(0), m_playedTogether(0), m_numOfPlayers(0), m_totalPlayersAbility(0),
-                         m_totalCards(0), m_goalkeepers(0), m_rootInTree(nullptr), m_teamSpirit(permutation_t()) { }
+Team::Team(int teamId) : m_teamId(teamId), m_points(0), m_numOfPlayers(0), m_totalPlayersAbility(0),
+                         m_totalCards(0), m_goalkeepers(0), m_rootInTree(nullptr),
+                         m_teamSpirit(permutation_t()), m_isInGame(true){ }
 
 int Team::getTeamId() const {
     return m_teamId;
@@ -11,10 +12,6 @@ int Team::getTeamId() const {
 
 int Team::getPoints() const {
     return m_points;
-}
-
-int Team::getPlayedTogether() const {
-    return m_playedTogether;
 }
 
 int Team::getNumOfPlayers() const {
@@ -31,10 +28,6 @@ int Team::getScore() const {
 
 int Team::getGoalkeepers() const {
     return m_goalkeepers;
-}
-
-void Team::increasePlayedTogether() {
-    m_playedTogether ++;
 }
 
 bool Team::isEmptyTeam() const {
@@ -66,6 +59,34 @@ void Team::setTeamSpirit(permutation_t newTeamSpirit)
 {
     m_teamSpirit = newTeamSpirit;
 }
+
+bool Team::getIsInGame() const {
+    return this->m_isInGame;
+}
+
+void Team::setIsInGame(bool isInGame) {
+    this->m_isInGame = isInGame;
+}
+//
+//shared_ptr<Player> Team::getNewestPlayer() const {
+//    return this->m_newestPlayer;
+//}
+//
+//void Team::setNewestPlayer(shared_ptr<Player>& newPlayer) {
+//    this->m_newestPlayer = newPlayer;
+//}
+
+void Team::insertPlayer(const shared_ptr<Player> &player) {
+    m_numOfPlayers++;
+    m_totalCards+=player->getCards();
+    if(player->getGoalKeeper()){
+        m_goalkeepers++;
+    }
+    m_totalPlayersAbility += player->getAbility();
+    m_teamSpirit = m_teamSpirit*(player->getSpirit());
+}
+
+
 
 
 
