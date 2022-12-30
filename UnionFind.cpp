@@ -66,12 +66,11 @@ void UnionFind::addPlayerToTeam(shared_ptr<Player> player, shared_ptr<Team> team
     if(team->getNumOfPlayers() != 0){
         Node* teamRoot = team->getRootInTree();
         playerNode->setParent(teamRoot);
+        permutation_t newSpirit = ((((playerNode->getParent())->getPlayer())->getSpirit()).inv()) *
+                                  (team->getTeamSpirit()) * (player->getSpirit());
+        int newGamesPlayed = (player->getGamesPlayed()) - (((playerNode->getParent())->getPlayer())->getGamesPlayed());
+        player->setSpirit(newSpirit);
+        player->setGamedPlayed(newGamesPlayed);
     }
-
-    permutation_t newSpirit = ((((playerNode->getParent())->getPlayer())->getSpirit()).inv()) *
-            (team->getTeamSpirit()) * (player->getSpirit());
-    int newGamesPlayed = (player->getGamesPlayed()) - (((playerNode->getParent())->getPlayer())->getGamesPlayed());
-    player->setSpirit(newSpirit);
-    player->setGamedPlayed(newGamesPlayed);
 }
 
