@@ -232,7 +232,6 @@ void testUniteUnion(UnionFind* u)
             findTest = false;
         }
     }
-
     if(findTest){
         cout << "find team Test Passed :)" << endl;
     }

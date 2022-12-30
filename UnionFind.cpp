@@ -9,32 +9,44 @@ void UnionFind::makeSet(shared_ptr<Player> player, shared_ptr<Team> team)
 
 void UnionFind::unionTeams(shared_ptr<Team> boughtTeam, shared_ptr<Team> buyerTeam)
 {
+//    std::cout << boughtTeam.get()->getTeamId() <<std::endl;
+//    std::cout << buyerTeam.get()->getTeamId() <<std::endl;
+
+
     Node* boughtTeamRoot = boughtTeam->getRootInTree();
     Node* buyerTeamRoot = buyerTeam->getRootInTree();
     permutation_t newSpirit;
-    if(boughtTeam->getNumOfPlayers() <= buyerTeam->getNumOfPlayers())
-    {
-        boughtTeamRoot->setParent(buyerTeamRoot);
-        boughtTeamRoot->setTeam(nullptr);
-        newSpirit = (((buyerTeamRoot->getPlayer())->getSpirit()).inv())*
-                (buyerTeamRoot->getTeam()->getTeamSpirit())
-                *((boughtTeamRoot->getPlayer())->getSpirit());
-        boughtTeamRoot->getPlayer()->setSpirit(newSpirit);
-        boughtTeamRoot->getPlayer()->updateGamesPlayed((-1)*buyerTeamRoot->getPlayer()->getGamesPlayed());
-    }
+    // in case there are players in both teams
+    if(boughtTeamRoot!= nullptr && buyerTeamRoot!= nullptr){
+        if(boughtTeam->getNumOfPlayers() <= buyerTeam->getNumOfPlayers())
+        {
+            newSpirit = (((buyerTeamRoot->getPlayer())->getSpirit()).inv())*
+                        (buyerTeamRoot->getTeam()->getTeamSpirit())
+                        *((boughtTeamRoot->getPlayer())->getSpirit());
+            boughtTeamRoot->getPlayer()->setSpirit(newSpirit);
+            boughtTeamRoot->getPlayer()->updateGamesPlayed((-1)*buyerTeamRoot->getPlayer()->getGamesPlayed());
+            boughtTeamRoot->setParent(buyerTeamRoot);
+            boughtTeamRoot->setTeam(nullptr);
+        }
 
-    else
-    {
-        buyerTeamRoot->setParent(boughtTeamRoot);
-        boughtTeamRoot->setTeam(buyerTeamRoot->getTeam());
-        buyerTeamRoot->setTeam(nullptr);
-        newSpirit = (((buyerTeamRoot->getTeam()->getTeamSpirit())) *
-                ((boughtTeamRoot->getPlayer())->getSpirit()));
-        (boughtTeamRoot->getPlayer())->setSpirit(newSpirit);
-        newSpirit = (((boughtTeamRoot->getTeam())->getTeamSpirit()).inv()) *
-                ((buyerTeamRoot->getPlayer())->getSpirit());
-        (buyerTeamRoot->getPlayer())->setSpirit(newSpirit);
-        (buyerTeamRoot->getPlayer())->updateGamesPlayed((-1)*boughtTeamRoot->getPlayer()->getGamesPlayed());
+        else
+        {
+            newSpirit = (((buyerTeamRoot->getTeam()->getTeamSpirit())) *
+                         ((boughtTeamRoot->getPlayer())->getSpirit()));
+            (boughtTeamRoot->getPlayer())->setSpirit(newSpirit);
+            newSpirit = (((boughtTeamRoot->getTeam())->getTeamSpirit()).inv()) *
+                        ((buyerTeamRoot->getPlayer())->getSpirit());
+            (buyerTeamRoot->getPlayer())->setSpirit(newSpirit);
+            (buyerTeamRoot->getPlayer())->updateGamesPlayed((-1)*boughtTeamRoot->getPlayer()->getGamesPlayed());
+            buyerTeamRoot->setParent(boughtTeamRoot);
+            boughtTeamRoot->setTeam(buyerTeamRoot->getTeam());
+            buyerTeamRoot->setTeam(nullptr);
+            buyerTeam->setRootInTree(boughtTeamRoot);
+        }
+    }
+    else if(boughtTeamRoot!= nullptr){
+        buyerTeam->setRootInTree(boughtTeamRoot);
+        boughtTeamRoot->setTeam(buyerTeam);
     }
 }
 
@@ -52,10 +64,13 @@ shared_ptr<Team> UnionFind::findPlayerTeam(int playerId) {
         totalGamesPlayed += (tempNode->getPlayer())->getGamesPlayed();
         tempNode=tempNode->getParent();
     }
-    playerNode->setParent(tempNode);
-    playerNode->getPlayer()->setSpirit((((tempNode->getPlayer())->getSpirit()).inv())*totalSpirit);
-    int newParentGamesPlayed = (tempNode->getPlayer())->getGamesPlayed();
-    playerNode->getPlayer()->setGamedPlayed(totalGamesPlayed-newParentGamesPlayed);
+    if((tempNode!=playerNode) && (tempNode!=playerNode->getParent())) {
+        playerNode->setParent(tempNode);
+        playerNode->getPlayer()->setSpirit((((tempNode->getPlayer())->getSpirit()).inv()) * totalSpirit);
+        int newParentGamesPlayed = (tempNode->getPlayer())->getGamesPlayed();
+        playerNode->getPlayer()->setGamedPlayed(totalGamesPlayed - newParentGamesPlayed);
+    }
+    shared_ptr<Team> t = tempNode->getTeam();
     return tempNode->getTeam();
 }
 

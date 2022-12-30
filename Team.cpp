@@ -4,7 +4,7 @@
 
 Team::Team(int teamId) : m_teamId(teamId), m_points(0), m_numOfPlayers(0), m_totalPlayersAbility(0),
                          m_totalCards(0), m_goalkeepers(0), m_rootInTree(nullptr),
-                         m_teamSpirit(permutation_t()), m_isInGame(true){ }
+                         m_teamSpirit(permutation_t::neutral()), m_isInGame(true){ }
 
 int Team::getTeamId() const {
     return m_teamId;
