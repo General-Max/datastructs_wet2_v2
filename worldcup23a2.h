@@ -21,6 +21,18 @@
 #include "SortTeamById.h"
 #include "SortByAbility.h"
 
+//Points of games
+const int WIN = 3;
+const int DRAW = 1;
+
+//Return map of play match
+const int wasDraw = 0;
+const int team1WonByCapability = 1;
+const int team1WonBySpirit = 2;
+const int team2WonByCapability = 3;
+const int team2WonBySpirit = 4;
+
+
 class world_cup_t {
 private:
 	//
@@ -34,7 +46,7 @@ public:
 	// <DO-NOT-MODIFY> {
 	
 	world_cup_t();
-	virtual ~world_cup_t();
+	virtual ~world_cup_t() = default;
 	
 	StatusType add_team(int teamId);
 	

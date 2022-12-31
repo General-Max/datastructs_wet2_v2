@@ -1,14 +1,8 @@
 #include "worldcup23a2.h"
 
-world_cup_t::world_cup_t()
-{
-	// TODO: Your code goes h
-}
-
-world_cup_t::~world_cup_t()
-{
-	// TODO: Your code goes here
-}
+world_cup_t::world_cup_t() : teamsTreeByAbility(AVLTree<shared_ptr<Team>, SortByAbility>()),
+                                teamsTreeById(AVLTree<shared_ptr<Team>, SortTeamById>()),
+                                playersSets(UnionFind()) {}
 
 StatusType world_cup_t::add_team(int teamId)
 {
@@ -76,43 +70,132 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 
 output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
 {
-	// TODO: Your code goes here
+    //TODO: recheck all the conditions
+	if(teamId1 <=0 || teamId2<=0 || teamId1==teamId2){
+        return StatusType::INVALID_INPUT;
+    }
+    if(teamsTreeById.find(teamId1)==nullptr || teamsTreeById.find(teamId2)==nullptr){
+        return StatusType::FAILURE;
+    }
+
+    if(teamsTreeById.find(teamId1)->getGoalkeepers()<=0 || teamsTreeById.find(teamId2)->getGoalkeepers()<=0){
+        return StatusType::FAILURE;
+    }
+
+    shared_ptr<Team> team1 = teamsTreeById.find(teamId1);
+    shared_ptr<Team> team2 = teamsTreeById.find(teamId2);
+
+    if(team1->getGoalkeepers()<=0 || team2->getGoalkeepers()<=0){
+        return StatusType::FAILURE;
+    }
+
+    int team1Capability = team1->getTotalPlayersAbility()+team1->getPoints();
+    int team2Capability = team2->getTotalPlayersAbility()+team2->getPoints();
+
+    int team1TotalSpirit = team1->getTeamSpirit().strength();
+    int team2TotalSpirit = team2->getTeamSpirit().strength();
+
+    //probably could do more efficient, but suppose to work TODO recheck
+    if(team1Capability > team2Capability){
+        team1->updatePoints(WIN);
+        return team1WonByCapability;
+    }
+    else if(team1Capability < team2Capability){
+        team2->updatePoints(WIN);
+        return team2WonByCapability;
+    }
+    else if(team1TotalSpirit > team2TotalSpirit){
+        team1->updatePoints(WIN);
+        return team1WonBySpirit;
+    }
+    else if(team1TotalSpirit < team2TotalSpirit){
+        team2->updatePoints(WIN);
+        return team2WonBySpirit;
+    }
+    else{
+        team1->updatePoints(DRAW);
+        team2->updatePoints(DRAW);
+        return wasDraw;
+    }
+
 	return StatusType::SUCCESS;
 }
 
 output_t<int> world_cup_t::num_played_games_for_player(int playerId)
 {
-	// TODO: Your code goes here
-	return 22;
+	if(playerId <= 0){
+        return StatusType::INVALID_INPUT;
+    }
+    if(playersSets.findPlayer(playerId)==nullptr){
+        return StatusType::FAILURE;
+    }
+    int playedGames = calculatePlayedGames(playersSets.findPlayer(playerId));   //TODO add proper function or change here
+	return playedGames;
 }
 
 StatusType world_cup_t::add_player_cards(int playerId, int cards)
 {
-	// TODO: Your code goes here
-	return StatusType::SUCCESS;
+    if(playerId <= 0 || cards<0){
+        return StatusType::INVALID_INPUT;
+    }
+    if(playersSets.findPlayer(playerId)==nullptr){
+        return StatusType::FAILURE;
+    }
+    if(playersSets.findPlayerTeam(playerId)->getIsInGame()){ //TODO check the syntax
+        playersSets.findPlayer(playerId)->updateCards(cards);
+        return StatusType::SUCCESS;
+    }
+	return StatusType::FAILURE;
 }
 
 output_t<int> world_cup_t::get_player_cards(int playerId)
 {
-	// TODO: Your code goes here
-	return StatusType::SUCCESS;
+    if(playerId <= 0){
+        return StatusType::INVALID_INPUT;
+    }
+    if(playersSets.findPlayer(playerId)==nullptr){
+        return StatusType::FAILURE;
+    }
+
+    return playersSets.findPlayer(playerId)->getCards();
 }
 
 output_t<int> world_cup_t::get_team_points(int teamId)
 {
-	// TODO: Your code goes here
-	return 30003;
+	if(teamId<=0){
+        return StatusType::INVALID_INPUT;
+    }
+    if(teamsTreeById.find(teamId)== nullptr){
+        return StatusType::FAILURE;
+    }
+
+    return teamsTreeById.find(teamId)->getPoints();
 }
 
 output_t<int> world_cup_t::get_ith_pointless_ability(int i)
 {
-	// TODO: Your code goes here
-	return 12345;
+	if(teamsTreeById.isEmpty() || teamsTreeByAbility.isEmpty()){//both suppose to be the same(by size) so check once?
+        return StatusType::FAILURE;
+    }
+    if(i<0 || i>=teamsTreeById.getSize()){
+        return StatusType::FAILURE;
+    }
+
+	return teamsTreeByAbility.select(i)->getTeamId(); //TODO recheck if this is how it is used
 }
 
 output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
 {
-	// TODO: Your code goes here
+    if(playerId<=0){
+        return StatusType::INVALID_INPUT;
+    }
+    //Todo recheck
+    if(playersSets.findPlayer(playerId) == nullptr || !playersSets.findPlayerTeam(playerId)->getIsInGame()){
+        return StatusType::FAILURE;
+    }
+
+    permutation_t partialSpirit = permutation_t::neutral();
+
 	return permutation_t();
 }
 
