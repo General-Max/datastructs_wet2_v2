@@ -11,7 +11,7 @@
 #include <memory>
 
 const int RATE = 2;
-const int INITIAL_SIZE = 2;
+const int INITIAL_SIZE = 4;
 const double COEFFICIENT = 0.61803;
 
 class HashMap

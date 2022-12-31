@@ -25,12 +25,12 @@ StatusType world_cup_t::add_team(int teamId)
 
 StatusType world_cup_t::remove_team(int teamId)
 {
-    return StatusType::FAILURE;
     if(teamId<=0){
         return StatusType::INVALID_INPUT;
     }
     shared_ptr<Team> teamToDelete = teamsTreeById.find(teamId);
     if(teamToDelete == nullptr){
+        return StatusType::FAILURE;
     }
     try{
         teamToDelete->setIsInGame(false);
@@ -69,6 +69,8 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
         teamsTreeById.remove(playerTeam);
         playerTeam->insertPlayer(player);
         teamsTreeById.insert(playerTeam);
+
+
     }
     catch(...){
         return StatusType::ALLOCATION_ERROR;
@@ -190,8 +192,6 @@ output_t<int> world_cup_t::get_ith_pointless_ability(int i)
     if(i<0 || i>=teamsTreeByAbility.getSize()){
         return StatusType::FAILURE;
     }
-
-    teamsTreeByAbility.printD(teamsTreeByAbility.getRoot(), 10);
     return teamsTreeByAbility.select(i)->getTeamId(); //TODO recheck if this is how it is used
 //	if(teamsTreeById.isEmpty() || teamsTreeByAbility.isEmpty()){//both suppose to be the same(by size) so check once?
 //        return StatusType::FAILURE;

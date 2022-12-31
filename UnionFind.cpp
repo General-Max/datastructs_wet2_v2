@@ -61,13 +61,14 @@ shared_ptr<Player> UnionFind::findPlayer(int playerId) {
 
 shared_ptr<Team> UnionFind::findPlayerTeam(int playerId) {
     Node* playerNode = allPlayers.findElement(playerId);
+    Team* tttt= (playerNode->getTeam()).get();
     if(playerNode == nullptr){
         return nullptr;
     }
     Node* tempNode = playerNode;
     permutation_t totalSpirit = permutation_t::neutral();
     int totalGamesPlayed = 0;
-    while(!tempNode->getIsRoot()){
+    while(!(tempNode->getIsRoot())){
         totalSpirit = (tempNode->getPlayer())->getSpirit() * totalSpirit;
         totalGamesPlayed += (tempNode->getPlayer())->getGamesPlayed();
         tempNode=tempNode->getParent();

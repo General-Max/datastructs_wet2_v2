@@ -50,7 +50,7 @@ void Node::setTeam(shared_ptr<Team> team)
 
 bool Node::getIsRoot() const
 {
-    return this->m_team != nullptr;
+    return (this->m_team != nullptr);
 }
 
 //permutation_t Node::getBuyingTeamSpirit() const
