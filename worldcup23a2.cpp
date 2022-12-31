@@ -53,6 +53,13 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
     shared_ptr<Team> playerTeam = teamsTreeById.find(playerId);
     shared_ptr<Player> player = playersSets.findPlayer(playerId);
     if((player != nullptr) || (playerTeam== nullptr)){
+        if(player != nullptr){
+            std::cout << "player is not null";
+        }
+        if(playerTeam == nullptr){
+            std::cout << "player is not null";
+        }
+
         return StatusType::FAILURE;
     }
     try{
