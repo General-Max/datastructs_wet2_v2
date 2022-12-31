@@ -17,7 +17,8 @@ add_executable(wet2
         Array.h
         AVLRankTree.h
         DynamicArray.h
-        main.cpp
+        #main.cpp
+        main23a2.cpp
         Player.cpp
         Player.h
         sortRegular.cpp

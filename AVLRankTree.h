@@ -366,16 +366,16 @@ typename AVLTree<T, Comparison>::BinNode *AVLTree<T, Comparison>::selectNode(AVL
     if(node == nullptr)
         return nullptr;
     // in case node is in the given index
-    if (getNodeSubTreeSize(node->m_left) == (index-1)) {
+    if (getNodeSubTreeSize(node->m_left) ==index) {
         return node;
     }
         // in case the element we are looking for is in the left subtree
-    else if(getNodeSubTreeSize(node->m_left) > (index-1)){
+    else if(getNodeSubTreeSize(node->m_left) > index){
         return selectNode(node->m_left, index);
     }
         // in case the element we are looking for is in the right subtree
     else{
-        return selectNode(node->m_right, index - getNodeSubTreeSize(node->m_left) -1);
+        return selectNode(node->m_right, index - getNodeSubTreeSize(node->m_left));
     }
 }
 
@@ -765,7 +765,7 @@ void AVLTree<T, Comparison>::printD(AVLTree<T, Comparison>::BinNode* node, int s
     for(int i= 10; i<space; i++){
         std::cout << " ";
     }
-    std::cout << node->m_data << ": (" << node->m_subTreeSize << ")" << "\n";
+    std::cout << *node->m_data << ": (" << node->m_subTreeSize << ")" << "\n";
     printD(node->m_left, space);
 }
 

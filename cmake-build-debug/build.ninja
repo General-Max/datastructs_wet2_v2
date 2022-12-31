@@ -77,8 +77,8 @@ build CMakeFiles/wet2.dir/HashMap.cpp.obj: CXX_COMPILER__wet2_Debug C$:/technion
   OBJECT_DIR = CMakeFiles\wet2.dir
   OBJECT_FILE_DIR = CMakeFiles\wet2.dir
 
-build CMakeFiles/wet2.dir/main.cpp.obj: CXX_COMPILER__wet2_Debug C$:/technion/data_structure/wet_v2/datastructs_wet2_v2/main.cpp || cmake_object_order_depends_target_wet2
-  DEP_FILE = CMakeFiles\wet2.dir\main.cpp.obj.d
+build CMakeFiles/wet2.dir/main23a2.cpp.obj: CXX_COMPILER__wet2_Debug C$:/technion/data_structure/wet_v2/datastructs_wet2_v2/main23a2.cpp || cmake_object_order_depends_target_wet2
+  DEP_FILE = CMakeFiles\wet2.dir\main23a2.cpp.obj.d
   FLAGS = -g
   INCLUDES = -IC:/technion/data_structure/wet_v2/datastructs_wet2_v2/.
   OBJECT_DIR = CMakeFiles\wet2.dir
@@ -127,7 +127,7 @@ build CMakeFiles/wet2.dir/worldcup23a2.cpp.obj: CXX_COMPILER__wet2_Debug C$:/tec
 #############################################
 # Link the executable wet2.exe
 
-build wet2.exe: CXX_EXECUTABLE_LINKER__wet2_Debug CMakeFiles/wet2.dir/Team.cpp.obj CMakeFiles/wet2.dir/Node.cpp.obj CMakeFiles/wet2.dir/UnionFind.cpp.obj CMakeFiles/wet2.dir/HashMap.cpp.obj CMakeFiles/wet2.dir/main.cpp.obj CMakeFiles/wet2.dir/Player.cpp.obj CMakeFiles/wet2.dir/sortRegular.cpp.obj CMakeFiles/wet2.dir/SortByAbility.cpp.obj CMakeFiles/wet2.dir/SortTeamById.cpp.obj CMakeFiles/wet2.dir/worldcup23a2.cpp.obj
+build wet2.exe: CXX_EXECUTABLE_LINKER__wet2_Debug CMakeFiles/wet2.dir/Team.cpp.obj CMakeFiles/wet2.dir/Node.cpp.obj CMakeFiles/wet2.dir/UnionFind.cpp.obj CMakeFiles/wet2.dir/HashMap.cpp.obj CMakeFiles/wet2.dir/main23a2.cpp.obj CMakeFiles/wet2.dir/Player.cpp.obj CMakeFiles/wet2.dir/sortRegular.cpp.obj CMakeFiles/wet2.dir/SortByAbility.cpp.obj CMakeFiles/wet2.dir/SortTeamById.cpp.obj CMakeFiles/wet2.dir/worldcup23a2.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\wet2.dir

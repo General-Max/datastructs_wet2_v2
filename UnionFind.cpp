@@ -54,7 +54,7 @@ void UnionFind::unionTeams(shared_ptr<Team> boughtTeam, shared_ptr<Team> buyerTe
 
 shared_ptr<Player> UnionFind::findPlayer(int playerId) {
     if(allPlayers.findElement(playerId)!= nullptr){
-        allPlayers.findElement(playerId)->getPlayer();
+        return allPlayers.findElement(playerId)->getPlayer();
     }
     return nullptr;
 }
