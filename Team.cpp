@@ -86,6 +86,39 @@ void Team::insertPlayer(const shared_ptr<Player> &player) {
     m_teamSpirit = m_teamSpirit*(player->getSpirit());
 }
 
+int Team::getTotalCards() const {
+    return this->m_totalCards;
+}
+
+
+void Team::setTotalPlayersAbility(int newTotalPlayersAbility) {
+    this->m_totalPlayersAbility = newTotalPlayersAbility;
+}
+
+void Team::setPoints(int newPoints) {
+    this->m_points = newPoints;
+}
+
+void Team::setGoalsKeepers(int newGoalsKeepers) {
+    this->m_goalkeepers = newGoalsKeepers;
+}
+
+void Team::setNumOfPlayers(int newNumOfPlayers) {
+    this->m_numOfPlayers = newNumOfPlayers;
+}
+
+void Team::setTotalCards(int newTotalCards) {
+    this->m_totalCards = newTotalCards;
+}
+
+void Team::updateAfterBuying(shared_ptr<Team> boughtTeam) {
+    m_points+=boughtTeam->getPoints();
+    m_numOfPlayers+=boughtTeam->getNumOfPlayers();
+    m_totalPlayersAbility+=boughtTeam->getTotalPlayersAbility();
+    m_totalCards+=boughtTeam->getTotalCards();
+    m_goalkeepers+=boughtTeam->getGoalkeepers();
+}
+
 
 
 

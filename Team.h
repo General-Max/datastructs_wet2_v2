@@ -42,10 +42,17 @@ public:
     int getTotalPlayersAbility() const;
 
     /**
+     * return the number of cards the the all the players in the team have
+     * @return
+     */
+    int getTotalCards() const;
+
+    /**
      * set a new new total players ability of the team
      * @param newTotalPlayersAbility
      */
     void setTotalPlayersAbility(int newTotalPlayersAbility);
+
     /**
      * @return the team's score, computed by:
      * the points plus the sum of abilities of all the players
@@ -117,6 +124,30 @@ public:
      */
     void setIsInGame(bool isInGame);
 
+    /**
+     * sets new points to the team
+     * @param newPoints
+     */
+    void setPoints(int newPoints);
+
+    /**
+     * sets new goals keepers amount
+     */
+    void setGoalsKeepers(int newGoalsKeepers);
+
+    /**
+     * sets the number of the players in the team
+     * @param newNumOfPlayers
+     */
+    void setNumOfPlayers(int newNumOfPlayers);
+
+    /**
+     * sets a new total cards of the team
+     * @param newTotalCards
+     */
+    void setTotalCards(int newTotalCards);
+
+    void updateAfterBuying(shared_ptr<Team> boughtTeam);
    /* shared_ptr<PLayer> getNewestPlayer() const;
 
     void setNewestPlayer(shared_ptr<Player>& newPlayer);*/
