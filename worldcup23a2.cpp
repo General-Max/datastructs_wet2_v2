@@ -40,7 +40,7 @@ StatusType world_cup_t::remove_team(int teamId)
     catch(...){
         return StatusType::ALLOCATION_ERROR;
     }
-	return StatusType::FAILURE;
+	return StatusType::SUCCESS;
 }
 
 StatusType world_cup_t::add_player(int playerId, int teamId,
