@@ -57,7 +57,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
             std::cout << "player is not null";
         }
         if(playerTeam == nullptr){
-            std::cout << "player is not null";
+            std::cout << "No team";
         }
 
         return StatusType::FAILURE;
