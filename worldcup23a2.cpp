@@ -62,6 +62,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 
         return StatusType::FAILURE;
     }
+
     try{
         player = std::make_shared<Player>(playerId, spirit, gamesPlayed, ability, cards, goalKeeper);
         playersSets.makeSet(player, playerTeam);

@@ -46,6 +46,7 @@ void UnionFind::unionTeams(shared_ptr<Team> boughtTeam, shared_ptr<Team> buyerTe
            buyerTeam->setRootInTree(boughtTeamRoot);
         }
     }
+    
     else if(boughtTeamRoot!= nullptr){
         buyerTeam->setRootInTree(boughtTeamRoot);
         boughtTeamRoot->setTeam(buyerTeam);

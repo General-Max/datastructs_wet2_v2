@@ -97,7 +97,6 @@ void HashMap::expand()
         }
     }
     delete[] oldArray;
-
  }
 
 Node* HashMap::findElement(int playerId) const
