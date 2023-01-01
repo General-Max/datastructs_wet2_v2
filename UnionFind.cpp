@@ -62,7 +62,6 @@ shared_ptr<Player> UnionFind::findPlayer(int playerId) {
 
 shared_ptr<Team> UnionFind::findPlayerTeam(int playerId) {
     Node* playerNode = allPlayers.findElement(playerId);
-    Team* tttt= (playerNode->getTeam()).get();
     if(playerNode == nullptr){
         return nullptr;
     }
