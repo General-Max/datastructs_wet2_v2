@@ -63,6 +63,19 @@ void HashMap::insertElement(shared_ptr<Player> player, std::shared_ptr<Team> pla
     m_data[index] = newNode;
 }
 
+void HashMap::insertNode(Node* node)
+{
+    int key = node->getPlayer()->getPlayerId();
+    m_occupancy++;
+
+    int index = HashFunction(key);
+    if(m_data[index] != nullptr){
+        node->setNext(m_data[index]);
+    }
+    m_data[index] = node;
+}
+
+
 void HashMap::expand()
 {
     int oldSize = m_size;
@@ -75,18 +88,15 @@ void HashMap::expand()
     m_data = newDataArray;
     m_size*=RATE;
     m_occupancy=0;
-    Node* createdNode;
     for(int i=0;i<oldSize;i++){
         temp = oldArray[i];
         while(temp!= nullptr){
-            insertElement(temp->getPlayer(), temp->getTeam());
-            createdNode = findElement(temp->getPlayer()->getPlayerId());
-            createdNode->setParent(temp->getParent());
-            createdNode->setTeam(temp->getTeam());
+            insertNode(temp);
+
             temp = temp->getNext();
         }
     }
-
+/*
     Node* toDelete;
     for(int i=0;i <oldSize; i++){
         toDelete = oldArray[i];
@@ -96,6 +106,7 @@ void HashMap::expand()
             toDelete = temp;
         }
     }
+    */
     delete[] oldArray;
  }
 

@@ -107,6 +107,11 @@ output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
     team1->getRootInTree()->getPlayer()->updateGamesPlayed(1);
     team2->getRootInTree()->getPlayer()->updateGamesPlayed(1);
 
+    std::cout << "team1TotalSpirit: " << team1TotalSpirit << std::endl;
+    std::cout << "team2TotalSpirit: " << team2TotalSpirit << std::endl;
+
+
+
     //probably could do more efficient, but suppose to work TODO recheck
     if(team1Capability > team2Capability){
         team1->updatePoints(WIN);

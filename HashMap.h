@@ -22,6 +22,7 @@ private:
     int m_occupancy;
     void expand();
     int HashFunction(int key) const;
+    void insertNode(Node* node);
 
 public:
     HashMap();

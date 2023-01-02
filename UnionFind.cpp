@@ -79,7 +79,6 @@ shared_ptr<Team> UnionFind::findPlayerTeam(int playerId) {
         int newParentGamesPlayed = (tempNode->getPlayer())->getGamesPlayed();
         playerNode->getPlayer()->setGamedPlayed(totalGamesPlayed - newParentGamesPlayed);
     }
-    shared_ptr<Team> t = tempNode->getTeam();
     return tempNode->getTeam();
 }
 
