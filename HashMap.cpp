@@ -71,7 +71,7 @@ void HashMap::insertNode(Node* node)
 
   //  shared_ptr<Player> newPlayer = std::make_shared<Player>((node->getPlayer())->getPlayerId(),(node->getPlayer())->getSpirit(),
     //                                                        (node->getPlayer())->getGamesPlayed(), (node->getPlayer())->getAbility(),
-      //                                                      (node->getPlayer())->getCards(), (node->getPlayer())->getGoalKeeper());
+      //                                              (node->getPlayer())->getCards(), (node->getPlayer())etGoalKeeper());
     Node* newNode = new Node(node->getPlayer());
     if(node->getIsRoot()){
         ((node->getPlayer())->getTeam())->setRootInTree(newNode);
