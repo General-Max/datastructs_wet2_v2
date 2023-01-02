@@ -106,7 +106,7 @@ shared_ptr<Team> UnionFind::findPlayerTeam(int playerId) {
 }
 
 void UnionFind::addPlayerToTeam(shared_ptr<Player> player, shared_ptr<Team> team) {
-    Node* playerNode = allPlayers.findElement(player->getPlayerId());
+    //Node* playerNode = allPlayers.findElement(player->getPlayerId());
     // in case it is the first player in the team, we should only update its fields
     if(team->getNumOfPlayers() != 0){
         Node* teamRoot = team->getRootInTree();
