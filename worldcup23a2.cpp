@@ -68,6 +68,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
         playersSets.makeSet(player, playerTeam);
         playersSets.addPlayerToTeam(player, playerTeam);
         teamsTreeById.remove(playerTeam);
+        playerTeam->setTeamSpirit((playerTeam->getTeamSpirit())*spirit);
         playerTeam->insertPlayer(player);
         teamsTreeById.insert(playerTeam);
 
@@ -106,11 +107,6 @@ output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
 
     team1->getRootInTree()->getPlayer()->updateGamesPlayed(1);
     team2->getRootInTree()->getPlayer()->updateGamesPlayed(1);
-
-    std::cout << "team1TotalSpirit: " << team1TotalSpirit << std::endl;
-    std::cout << "team2TotalSpirit: " << team2TotalSpirit << std::endl;
-
-
 
     //probably could do more efficient, but suppose to work TODO recheck
     if(team1Capability > team2Capability){
@@ -241,5 +237,7 @@ StatusType world_cup_t::buy_team(int buyerId, int boughtId)
     boughtTeam->setIsInGame(false);
 
     buyerTeam->updateAfterBuying(boughtTeam);
+    teamsTreeById.remove(boughtTeam);
+    teamsTreeByAbility.remove(boughtTeam);
     return StatusType::SUCCESS;
 }

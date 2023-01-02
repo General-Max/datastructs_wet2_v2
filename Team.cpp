@@ -83,7 +83,6 @@ void Team::insertPlayer(const shared_ptr<Player> &player) {
         m_goalkeepers++;
     }
     m_totalPlayersAbility += player->getAbility();
-    m_teamSpirit = m_teamSpirit*(player->getSpirit());
 }
 
 int Team::getTotalCards() const {
