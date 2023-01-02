@@ -134,7 +134,6 @@ public:
 
     T* inOrderArrayToTree(T* array);
 
-
     void printH(BinNode *node, int space);
 
     void printD(BinNode *node, int space);
@@ -150,7 +149,7 @@ private:
     /**
      * creates a new node with the given data
      * @param data
-     * @return the new noed
+     * @return the new node
      */
     BinNode *initNode(T data);
 
@@ -366,16 +365,16 @@ typename AVLTree<T, Comparison>::BinNode *AVLTree<T, Comparison>::selectNode(AVL
     if(node == nullptr)
         return nullptr;
     // in case node is in the given index
-    if (getNodeSubTreeSize(node->m_left) ==index) {
+    if (getNodeSubTreeSize(node->m_left) ==index-1) {
         return node;
     }
         // in case the element we are looking for is in the left subtree
-    else if(getNodeSubTreeSize(node->m_left) > index){
+    else if(getNodeSubTreeSize(node->m_left) > index-1){
         return selectNode(node->m_left, index);
     }
         // in case the element we are looking for is in the right subtree
     else{
-        return selectNode(node->m_right, index - getNodeSubTreeSize(node->m_left));
+        return selectNode(node->m_right, index - getNodeSubTreeSize(node->m_left)- 1);
     }
 }
 
@@ -470,6 +469,7 @@ typename AVLTree<T, Comparison>::BinNode *AVLTree<T, Comparison>::insertNode(AVL
                                                                              AVLTree<T, Comparison>::BinNode *father){
     if (currentNode == nullptr) {
         newNode->m_father = father;
+        updateNodeSubTreeSize(newNode);
         return newNode;
     }
     if(Comparison::lessThan(newNode->m_data, currentNode->m_data)){
@@ -512,7 +512,7 @@ typename AVLTree<T, Comparison>::BinNode *AVLTree<T, Comparison>::removeNode(AVL
         return nullptr;
     }
     // Delete the node
-    if (currentNode->m_data == nodeToDelete->m_data) {
+    if (Comparison::equalTo(currentNode->m_data, nodeToDelete->m_data)) {
         if (!nodeToDelete->m_right && !nodeToDelete->m_left) {
             // Leaf
             delete nodeToDelete;

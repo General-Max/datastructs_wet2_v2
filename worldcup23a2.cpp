@@ -34,8 +34,8 @@ StatusType world_cup_t::remove_team(int teamId)
     }
     try{
         teamToDelete->setIsInGame(false);
-        teamsTreeById.remove(teamToDelete);
         teamsTreeByAbility.remove(teamToDelete);
+        teamsTreeById.remove(teamToDelete);
     }
     catch(...){
         return StatusType::ALLOCATION_ERROR;
@@ -67,12 +67,16 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
         player = std::make_shared<Player>(playerId, spirit, gamesPlayed, ability, cards, goalKeeper);
         playersSets.makeSet(player, playerTeam);
         playersSets.addPlayerToTeam(player, playerTeam);
-        teamsTreeById.remove(playerTeam);
+        if(teamsTreeByAbility.find(playerTeam) == nullptr){
+            std::cout << "team not found" << std::endl;
+        }
+        teamsTreeByAbility.remove(playerTeam);
         playerTeam->setTeamSpirit((playerTeam->getTeamSpirit())*spirit);
         playerTeam->insertPlayer(player);
-        teamsTreeById.insert(playerTeam);
+        teamsTreeByAbility.insert(playerTeam);
     }
     catch(...){
+        std::cout << "failed";
         return StatusType::ALLOCATION_ERROR;
     }
 
@@ -192,7 +196,7 @@ output_t<int> world_cup_t::get_ith_pointless_ability(int i)
     if(i<0 || i>=teamsTreeByAbility.getSize()){
         return StatusType::FAILURE;
     }
-    return teamsTreeByAbility.select(i)->getTeamId(); //TODO recheck if this is how it is used
+    return teamsTreeByAbility.select(i+1)->getTeamId(); //TODO recheck if this is how it is used
 //	if(teamsTreeById.isEmpty() || teamsTreeByAbility.isEmpty()){//both suppose to be the same(by size) so check once?
 //        return StatusType::FAILURE;
 //    }
