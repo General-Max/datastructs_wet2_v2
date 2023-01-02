@@ -41,7 +41,8 @@ private:
     AVLTree<shared_ptr<Team>, SortByAbility> teamsTreeByAbility;
     AVLTree<shared_ptr<Team>, SortTeamById> teamsTreeById;
     UnionFind playersSets;
-
+    int calculatePlayedGames(int playerId);
+    permutation_t calculateSpirit(int playerId);
 public:
 	// <DO-NOT-MODIFY> {
 	

@@ -8,6 +8,8 @@
 using std::ostream;
 using std::shared_ptr;
 
+class Team;
+
 class Player{
 public:
    /**
@@ -95,6 +97,14 @@ public:
      */
     void setSpirit(const permutation_t& newSpirit);
 
+    shared_ptr<Team> getTeam() const;
+
+    void setTeam(shared_ptr<Team>);
+
+    shared_ptr<Player> getParent() const;
+
+    void setParent(shared_ptr<Player>);
+
 private:
     int m_playerId;
     permutation_t m_spirit;
@@ -102,6 +112,8 @@ private:
     int m_ability;
     int m_cards;
     bool m_goalKeeper;
+    shared_ptr<Team> m_team;
+    shared_ptr<Player> m_parent;
 };
 
 #endif //WET2_PLAYER_H

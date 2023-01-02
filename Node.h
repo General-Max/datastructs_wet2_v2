@@ -13,8 +13,8 @@ class Node
 private:
     shared_ptr<Player> m_player;
     Node* m_next;
-    Node* m_parent;
-    shared_ptr<Team> m_team;
+//    Node* m_parent;
+//    shared_ptr<Team> m_team;
 //    permutation_t m_buyingTeamSpirit;
 
 public:
@@ -29,13 +29,13 @@ public:
     Node* getNext() const;
     void setNext(Node* next);
 
-    Node* getParent() const;
-    void setParent(Node* parent);
-
-    shared_ptr<Team> getTeam() const;
-    void setTeam(shared_ptr<Team> team);
-
-    bool getIsRoot() const;
+//    Node* getParent() const;
+//    void setParent(Node* parent);
+//
+//    shared_ptr<Team> getTeam() const;
+//    void setTeam(shared_ptr<Team> team);
+//
+     bool getIsRoot() const;
 
 //    permutation_t getBuyingTeamSpirit() const;
 //    void setBuyingTeamSpirit(permutation_t other);

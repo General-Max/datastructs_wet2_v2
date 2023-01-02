@@ -71,8 +71,6 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
         playerTeam->setTeamSpirit((playerTeam->getTeamSpirit())*spirit);
         playerTeam->insertPlayer(player);
         teamsTreeById.insert(playerTeam);
-
-
     }
     catch(...){
         return StatusType::ALLOCATION_ERROR;
@@ -140,7 +138,7 @@ output_t<int> world_cup_t::num_played_games_for_player(int playerId)
     if(playersSets.findPlayer(playerId)==nullptr){
         return StatusType::FAILURE;
     }
-    int playedGames = playersSets.calculatePlayedGames(playerId);   //TODO add proper function or change here
+    int playedGames = calculatePlayedGames(playerId);   //TODO add proper function or change here
 	return playedGames;
 }
 
@@ -217,7 +215,7 @@ output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
         return StatusType::FAILURE;
     }
 
-    permutation_t partialSpirit = playersSets.calculateSpirit(playerId);
+    permutation_t partialSpirit = calculateSpirit(playerId);
 
 	return partialSpirit;
 }
@@ -241,3 +239,27 @@ StatusType world_cup_t::buy_team(int buyerId, int boughtId)
     teamsTreeByAbility.remove(boughtTeam);
     return StatusType::SUCCESS;
 }
+
+int world_cup_t::calculatePlayedGames(int playerId) {
+    int gamesPlayed = 0;
+    shared_ptr<Player> player = playersSets.findPlayer(playerId);
+    while(player!=nullptr)
+    {
+        gamesPlayed += player->getGamesPlayed();
+        player = player->getParent();
+    }
+    return gamesPlayed;
+}
+
+permutation_t world_cup_t::calculateSpirit(int playerId) {
+    permutation_t partialSpirit = permutation_t::neutral();
+    shared_ptr<Player> player = playersSets.findPlayer(playerId);
+    while(player!=nullptr)
+    {
+        partialSpirit = (player->getSpirit())*partialSpirit;
+        player = player->getParent();
+    }
+    return partialSpirit;
+}
+
+

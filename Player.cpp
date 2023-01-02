@@ -61,4 +61,26 @@ void Player::setPlayerAbility(int newPlayerAbility) {
     this->m_ability = newPlayerAbility;
 }
 
+shared_ptr<Team> Player::getTeam() const
+{
+    return m_team;
+}
+
+void Player::setTeam(shared_ptr<Team> team)
+{
+    m_team = team;
+}
+
+shared_ptr<Player> Player::getParent() const
+{
+    return m_parent;
+}
+
+void Player::setParent(shared_ptr<Player> newParent)
+{
+    m_parent = newParent;
+}
+
+
+
 

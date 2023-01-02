@@ -52,7 +52,8 @@ void HashMap::insertElement(shared_ptr<Player> player, std::shared_ptr<Team> pla
 
     // in case it is the root of the inverse tree
     if((playerTeam->getNumOfPlayers())==0){
-        newNode->setTeam(playerTeam);
+       // shared_ptr<Team> newTeam = std::make_shared<Team>(playerTeam->getTeamId());
+        newNode->getPlayer()->setTeam(playerTeam);
         playerTeam->setRootInTree(newNode);
     }
     int index = HashFunction(key);
@@ -65,14 +66,21 @@ void HashMap::insertElement(shared_ptr<Player> player, std::shared_ptr<Team> pla
 
 void HashMap::insertNode(Node* node)
 {
-    int key = node->getPlayer()->getPlayerId();
+    int key = (node->getPlayer())->getPlayerId();
     m_occupancy++;
 
+  //  shared_ptr<Player> newPlayer = std::make_shared<Player>((node->getPlayer())->getPlayerId(),(node->getPlayer())->getSpirit(),
+    //                                                        (node->getPlayer())->getGamesPlayed(), (node->getPlayer())->getAbility(),
+      //                                                      (node->getPlayer())->getCards(), (node->getPlayer())->getGoalKeeper());
+    Node* newNode = new Node(node->getPlayer());
+    if(node->getIsRoot()){
+        ((node->getPlayer())->getTeam())->setRootInTree(newNode);
+    }
     int index = HashFunction(key);
     if(m_data[index] != nullptr){
-        node->setNext(m_data[index]);
+        newNode->setNext(m_data[index]);
     }
-    m_data[index] = node;
+    m_data[index] = newNode;
 }
 
 
@@ -92,11 +100,10 @@ void HashMap::expand()
         temp = oldArray[i];
         while(temp!= nullptr){
             insertNode(temp);
-
             temp = temp->getNext();
         }
     }
-/*
+
     Node* toDelete;
     for(int i=0;i <oldSize; i++){
         toDelete = oldArray[i];
@@ -106,7 +113,7 @@ void HashMap::expand()
             toDelete = temp;
         }
     }
-    */
+
     delete[] oldArray;
  }
 

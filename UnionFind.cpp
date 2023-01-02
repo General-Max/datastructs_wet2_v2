@@ -21,35 +21,35 @@ void UnionFind::unionTeams(shared_ptr<Team> boughtTeam, shared_ptr<Team> buyerTe
         if(boughtTeam->getNumOfPlayers() <= buyerTeam->getNumOfPlayers())
         {
             newSpirit = (((buyerTeamRoot->getPlayer())->getSpirit()).inv())*
-                        (buyerTeamRoot->getTeam()->getTeamSpirit())
+                        (buyerTeam->getTeamSpirit())
                         *((boughtTeamRoot->getPlayer())->getSpirit());
             boughtTeamRoot->getPlayer()->setSpirit(newSpirit);
             boughtTeamRoot->getPlayer()->updateGamesPlayed((-1)*((buyerTeamRoot->getPlayer())->getGamesPlayed()));
-            boughtTeamRoot->setParent(buyerTeamRoot);
-            boughtTeamRoot->setTeam(nullptr);
+            (boughtTeamRoot->getPlayer())->setParent(buyerTeamRoot->getPlayer());
+            (boughtTeamRoot->getPlayer())->setTeam(nullptr);
         }
 
         else
         {
-           newSpirit = (((buyerTeamRoot->getTeam()->getTeamSpirit())) *
-                         ((boughtTeamRoot->getPlayer())->getSpirit()));
+           newSpirit = ((buyerTeam->getTeamSpirit())) *
+                         ((boughtTeamRoot->getPlayer())->getSpirit());
            (boughtTeamRoot->getPlayer())->setSpirit(newSpirit);
            newSpirit = (((boughtTeamRoot->getPlayer())->getSpirit()).inv()) *
                         ((buyerTeamRoot->getPlayer())->getSpirit());
            (buyerTeamRoot->getPlayer())->setSpirit(newSpirit);
-           newSpirit = ((buyerTeamRoot->getTeam())->getTeamSpirit())*((boughtTeamRoot->getTeam())->getTeamSpirit());
-           (buyerTeamRoot->getTeam())->setTeamSpirit(newSpirit);
+           newSpirit = (buyerTeam->getTeamSpirit())*((boughtTeam)->getTeamSpirit());
+           (buyerTeam)->setTeamSpirit(newSpirit);
            (buyerTeamRoot->getPlayer())->updateGamesPlayed((-1)*(boughtTeamRoot->getPlayer()->getGamesPlayed()));
-           buyerTeamRoot->setParent(boughtTeamRoot);
-           boughtTeamRoot->setTeam(buyerTeamRoot->getTeam());
-           buyerTeamRoot->setTeam(nullptr);
+           (buyerTeamRoot->getPlayer())->setParent(boughtTeamRoot->getPlayer());
+            (boughtTeamRoot->getPlayer())->setTeam(buyerTeam);
+           (buyerTeamRoot->getPlayer())->setTeam(nullptr);
            buyerTeam->setRootInTree(boughtTeamRoot);
         }
     }
     
     else if(boughtTeamRoot!= nullptr){
         buyerTeam->setRootInTree(boughtTeamRoot);
-        boughtTeamRoot->setTeam(buyerTeam);
+        (boughtTeamRoot->getPlayer())->setTeam(buyerTeam);
     }
 }
 
@@ -65,57 +65,58 @@ shared_ptr<Team> UnionFind::findPlayerTeam(int playerId) {
     if(playerNode == nullptr){
         return nullptr;
     }
-    Node* tempNode = playerNode;
     permutation_t totalSpirit = permutation_t::neutral();
     int totalGamesPlayed = 0;
-    while(!(tempNode->getIsRoot())){
-        totalSpirit = (tempNode->getPlayer())->getSpirit() * totalSpirit;
-        totalGamesPlayed += (tempNode->getPlayer())->getGamesPlayed();
-        tempNode=tempNode->getParent();
+    shared_ptr<Player> tempPlayer = playerNode->getPlayer();
+
+    // while the player is not the root of the tree
+    while((tempPlayer->getTeam()) == nullptr){
+        totalSpirit = (tempPlayer->getSpirit()) * totalSpirit;
+        totalGamesPlayed += tempPlayer->getGamesPlayed();
+        tempPlayer = tempPlayer->getParent();
     }
-    if((tempNode!=playerNode) && (tempNode!=playerNode->getParent())) {
-        playerNode->setParent(tempNode);
-        playerNode->getPlayer()->setSpirit((((tempNode->getPlayer())->getSpirit()).inv()) * totalSpirit);
-        int newParentGamesPlayed = (tempNode->getPlayer())->getGamesPlayed();
+    if((tempPlayer!=(playerNode->getPlayer())) && (tempPlayer!=(playerNode->getPlayer())->getParent())) {
+        (playerNode->getPlayer())->setParent(tempPlayer);
+        playerNode->getPlayer()->setSpirit(((tempPlayer->getSpirit()).inv()) * totalSpirit);
+        int newParentGamesPlayed = tempPlayer->getGamesPlayed();
         playerNode->getPlayer()->setGamedPlayed(totalGamesPlayed - newParentGamesPlayed);
     }
-    return tempNode->getTeam();
+    return tempPlayer->getTeam();
 }
 
 void UnionFind::addPlayerToTeam(shared_ptr<Player> player, shared_ptr<Team> team) {
     Node* playerNode = allPlayers.findElement(player->getPlayerId());
-
     // in case it is the first player in the team, we should only update its fields
     if(team->getNumOfPlayers() != 0){
         Node* teamRoot = team->getRootInTree();
-        playerNode->setParent(teamRoot);
-        permutation_t newSpirit = ((((playerNode->getParent())->getPlayer())->getSpirit()).inv()) *
+        player->setParent(teamRoot->getPlayer());
+        permutation_t newSpirit = (((player->getParent())->getSpirit()).inv()) *
                                   (team->getTeamSpirit()) * (player->getSpirit());
-        int newGamesPlayed = (player->getGamesPlayed()) - (((playerNode->getParent())->getPlayer())->getGamesPlayed());
+        int newGamesPlayed = (player->getGamesPlayed()) - ((player->getParent())->getGamesPlayed());
         player->setSpirit(newSpirit);
         player->setGamedPlayed(newGamesPlayed);
     }
 }
 
-int UnionFind::calculatePlayedGames(int playerId) {
-    int gamesPlayed = 0;
-    Node* tempNode = allPlayers.findElement(playerId);
-    while(tempNode != nullptr){
-        gamesPlayed += (tempNode->getPlayer())->getGamesPlayed();
-        tempNode = tempNode->getParent();
-    }
-    return gamesPlayed;
-}
-
-permutation_t UnionFind::calculateSpirit(int playerId) {
-    permutation_t partialSpirit = permutation_t::neutral();
-    Node* tempNode = allPlayers.findElement(playerId);
-    while(tempNode != nullptr){
-        partialSpirit = (tempNode->getPlayer())->getSpirit()*partialSpirit;
-        tempNode = tempNode->getParent();
-    }
-    return partialSpirit;
-}
+//int UnionFind::calculatePlayedGames(int playerId) {
+//    int gamesPlayed = 0;
+//    Node* tempNode = allPlayers.findElement(playerId);
+//    while(tempNode != nullptr){
+//        gamesPlayed += (tempNode->getPlayer())->getGamesPlayed();
+//        tempNode = tempNode->getParent();
+//    }
+//    return gamesPlayed;
+//}
+//
+//permutation_t UnionFind::calculateSpirit(int playerId) {
+//    permutation_t partialSpirit = permutation_t::neutral();
+//    Node* tempNode = allPlayers.findElement(playerId);
+//    while(tempNode != nullptr){
+//        partialSpirit = (tempNode->getPlayer())->getSpirit()*partialSpirit;
+//        tempNode = tempNode->getParent();
+//    }
+//    return partialSpirit;
+//}
 
 
 

@@ -6,6 +6,7 @@
 
 using std::ostream;
 class Node;
+class Player;
 
 class Team{
 public:
