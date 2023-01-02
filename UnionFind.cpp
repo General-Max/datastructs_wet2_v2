@@ -76,12 +76,32 @@ shared_ptr<Team> UnionFind::findPlayerTeam(int playerId) {
         totalGamesPlayed += tempPlayer->getGamesPlayed();
         tempPlayer = tempPlayer->getParent();
     }
-    if((tempPlayer!=(playerNode->getPlayer())) && (tempPlayer!=(playerNode->getPlayer())->getParent())) {
-        (playerNode->getPlayer())->setParent(tempPlayer);
-        playerNode->getPlayer()->setSpirit(((tempPlayer->getSpirit()).inv()) * totalSpirit);
+    totalSpirit = (tempPlayer->getSpirit()) * totalSpirit;
+    totalGamesPlayed += tempPlayer->getGamesPlayed();
+    shared_ptr<Player> player = playerNode->getPlayer();
+    shared_ptr<Player> parent;
+    permutation_t oldSpirit;
+    int oldGamesPlayed;
+    while(player != nullptr && (player->getParent())!= nullptr){
+        parent = player->getParent();
+        oldSpirit = player->getSpirit();
+        oldGamesPlayed = player->getGamesPlayed();
+        player->setParent(tempPlayer);
+        player->setSpirit(((tempPlayer->getSpirit()).inv()) * totalSpirit);
         int newParentGamesPlayed = tempPlayer->getGamesPlayed();
-        playerNode->getPlayer()->setGamedPlayed(totalGamesPlayed - newParentGamesPlayed);
+        player->setGamedPlayed(totalGamesPlayed - newParentGamesPlayed);
+
+        totalSpirit = totalSpirit * oldSpirit.inv();
+        totalGamesPlayed -= oldGamesPlayed;
+
+        player = parent;
     }
+//    if((tempPlayer!=(playerNode->getPlayer())) && (tempPlayer!=(playerNode->getPlayer())->getParent())) {
+//        (playerNode->getPlayer())->setParent(tempPlayer);
+//        playerNode->getPlayer()->setSpirit(((tempPlayer->getSpirit()).inv()) * totalSpirit);
+//        int newParentGamesPlayed = tempPlayer->getGamesPlayed();
+//        playerNode->getPlayer()->setGamedPlayed(totalGamesPlayed - newParentGamesPlayed);
+//    }
     return tempPlayer->getTeam();
 }
 

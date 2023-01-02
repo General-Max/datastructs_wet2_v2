@@ -43,7 +43,6 @@ int HashMap::getOccupancy() const
 void HashMap::insertElement(shared_ptr<Player> player, std::shared_ptr<Team> playerTeam)
 {
     if(m_occupancy==m_size-1){
-        std::cout << "expanding" << std::endl;
         expand();
     }
     int key = player->getPlayerId();

@@ -33,9 +33,11 @@ StatusType world_cup_t::remove_team(int teamId)
         return StatusType::FAILURE;
     }
     try{
+
         teamToDelete->setIsInGame(false);
         teamsTreeByAbility.remove(teamToDelete);
         teamsTreeById.remove(teamToDelete);
+
     }
     catch(...){
         return StatusType::ALLOCATION_ERROR;
@@ -53,13 +55,6 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
     shared_ptr<Team> playerTeam = teamsTreeById.find(teamId);
     shared_ptr<Player> player = playersSets.findPlayer(playerId);
     if((player != nullptr) || (playerTeam== nullptr)){
-        if(player != nullptr){
-            std::cout << "player is not null";
-        }
-        if(playerTeam == nullptr){
-            std::cout << "No team";
-        }
-
         return StatusType::FAILURE;
     }
 
@@ -67,16 +62,13 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
         player = std::make_shared<Player>(playerId, spirit, gamesPlayed, ability, cards, goalKeeper);
         playersSets.makeSet(player, playerTeam);
         playersSets.addPlayerToTeam(player, playerTeam);
-        if(teamsTreeByAbility.find(playerTeam) == nullptr){
-            std::cout << "team not found" << std::endl;
-        }
+
         teamsTreeByAbility.remove(playerTeam);
         playerTeam->setTeamSpirit((playerTeam->getTeamSpirit())*spirit);
         playerTeam->insertPlayer(player);
         teamsTreeByAbility.insert(playerTeam);
     }
     catch(...){
-        std::cout << "failed";
         return StatusType::ALLOCATION_ERROR;
     }
 
@@ -235,12 +227,18 @@ StatusType world_cup_t::buy_team(int buyerId, int boughtId)
     if(buyerTeam== nullptr || boughtTeam==nullptr){
         return StatusType::FAILURE;
     }
-    playersSets.unionTeams(boughtTeam, buyerTeam);
-    boughtTeam->setIsInGame(false);
 
+    teamsTreeByAbility.remove(buyerTeam);
+    playersSets.unionTeams(boughtTeam, buyerTeam);
+
+    boughtTeam->setIsInGame(false);
     buyerTeam->updateAfterBuying(boughtTeam);
+
     teamsTreeById.remove(boughtTeam);
     teamsTreeByAbility.remove(boughtTeam);
+    teamsTreeByAbility.insert(buyerTeam);
+
+
     return StatusType::SUCCESS;
 }
 
