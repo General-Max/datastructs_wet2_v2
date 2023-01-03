@@ -477,6 +477,7 @@ typename AVLTree<T, Comparison>::BinNode *AVLTree<T, Comparison>::insertNode(AVL
     } else {
         currentNode->m_right = insertNode(newNode, currentNode->m_right, currentNode);
     }
+    updateNodeSubTreeSize(currentNode);
     return balanceTree(currentNode);
 }
 
@@ -506,47 +507,47 @@ typename AVLTree<T, Comparison>::BinNode *AVLTree<T, Comparison>::findNode(AVLTr
 }
 
 template<class T, class Comparison>
-typename AVLTree<T, Comparison>::BinNode *AVLTree<T, Comparison>::removeNode(AVLTree<T, Comparison>::BinNode *currentNode,
-                                                                             AVLTree<T, Comparison>::BinNode *nodeToDelete){
-    if (currentNode == nullptr) {
+typename AVLTree<T, Comparison>::BinNode *AVLTree<T, Comparison>::removeNode(AVLTree<T, Comparison>::BinNode *nodeToRemove,
+                                                                             AVLTree<T, Comparison>::BinNode *currentNode){
+    if (nodeToRemove == nullptr) {
         return nullptr;
     }
     // Delete the node
-    if (Comparison::equalTo(currentNode->m_data, nodeToDelete->m_data)) {
-        if (!nodeToDelete->m_right && !nodeToDelete->m_left) {
+    if (Comparison::equalTo(nodeToRemove->m_data, currentNode->m_data)) {
+        if (!currentNode->m_right && !currentNode->m_left) {
             // Leaf
-            delete nodeToDelete;
+            delete currentNode;
             return nullptr;
-        } else if (!nodeToDelete->m_right) {
+        } else if (!currentNode->m_right) {
             // Only left son
-            BinNode* temp = nodeToDelete->m_left;
-            nodeToDelete->m_data = temp->m_data;
-            nodeToDelete->m_left = removeNode(nodeToDelete, nodeToDelete->m_left);
+            BinNode* temp = currentNode->m_left;
+            currentNode->m_data = temp->m_data;
+            currentNode->m_left = removeNode(currentNode, currentNode->m_left);
 
-        } else if (!nodeToDelete->m_left) {
+        } else if (!currentNode->m_left) {
             // Only right son
-            BinNode* temp = nodeToDelete->m_right;
-            nodeToDelete->m_data = temp->m_data;
-            nodeToDelete->m_right = removeNode(nodeToDelete, nodeToDelete->m_right);
+            BinNode* temp = currentNode->m_right;
+            currentNode->m_data = temp->m_data;
+            currentNode->m_right = removeNode(currentNode, currentNode->m_right);
         } else {
             // right and left son exist
-            BinNode *temp = findMin(nodeToDelete->m_right);
-            nodeToDelete->m_data = temp->m_data;
-            nodeToDelete->m_right = removeNode(nodeToDelete, nodeToDelete->m_right);
+            BinNode *temp = findMin(currentNode->m_right);
+            currentNode->m_data = temp->m_data;
+            currentNode->m_right = removeNode(currentNode, currentNode->m_right);
         }
     }
     else{
-        if (Comparison::lessThan(currentNode->m_data,nodeToDelete->m_data)) {
-            nodeToDelete->m_left = removeNode(currentNode, nodeToDelete->m_left);
+        if (Comparison::lessThan(nodeToRemove->m_data,currentNode->m_data)) {
+            currentNode->m_left = removeNode(nodeToRemove, currentNode->m_left);
         } else {
-            nodeToDelete->m_right = removeNode(currentNode, nodeToDelete->m_right);
+            currentNode->m_right = removeNode(nodeToRemove,currentNode->m_right);
         }
     }
 
-    nodeToDelete->m_height = findNewHeight(nodeToDelete);
-    updateNodeSubTreeSize(nodeToDelete);
+    currentNode->m_height = findNewHeight(currentNode);
+    updateNodeSubTreeSize(currentNode);
     // Balancing the tree
-    return balanceTree(nodeToDelete);
+    return balanceTree(currentNode);
 }
 
 template<class T, class Comparison>

@@ -37,7 +37,7 @@ int main()
 	int d1, d2, d3;
 	permutation_t p1;
 	bool b1;
-	
+    int counterer = 0;
 	// Init
 	world_cup_t *obj = new world_cup_t();
 	
@@ -45,6 +45,7 @@ int main()
 	string op;
 	while (cin >> op)
 	{
+        counterer++;
 		if (!op.compare("add_team"))
 		{
 			cin >> tid;

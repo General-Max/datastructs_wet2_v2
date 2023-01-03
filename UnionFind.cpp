@@ -24,9 +24,12 @@ void UnionFind::unionTeams(shared_ptr<Team> boughtTeam, shared_ptr<Team> buyerTe
                         (buyerTeam->getTeamSpirit())
                         *((boughtTeamRoot->getPlayer())->getSpirit());
             boughtTeamRoot->getPlayer()->setSpirit(newSpirit);
+            newSpirit = (buyerTeam->getTeamSpirit()) * (boughtTeam->getTeamSpirit());
+            buyerTeam->setTeamSpirit(newSpirit);
             boughtTeamRoot->getPlayer()->updateGamesPlayed((-1)*((buyerTeamRoot->getPlayer())->getGamesPlayed()));
             (boughtTeamRoot->getPlayer())->setParent(buyerTeamRoot->getPlayer());
             (boughtTeamRoot->getPlayer())->setTeam(nullptr);
+
             if(boughtTeam!=buyerTeam){
                 boughtTeam->setRootInTree(nullptr);
             }
