@@ -27,6 +27,9 @@ void UnionFind::unionTeams(shared_ptr<Team> boughtTeam, shared_ptr<Team> buyerTe
             boughtTeamRoot->getPlayer()->updateGamesPlayed((-1)*((buyerTeamRoot->getPlayer())->getGamesPlayed()));
             (boughtTeamRoot->getPlayer())->setParent(buyerTeamRoot->getPlayer());
             (boughtTeamRoot->getPlayer())->setTeam(nullptr);
+            if(boughtTeam!=buyerTeam){
+                boughtTeam->setRootInTree(nullptr);
+            }
         }
 
         else
@@ -43,6 +46,7 @@ void UnionFind::unionTeams(shared_ptr<Team> boughtTeam, shared_ptr<Team> buyerTe
            (buyerTeamRoot->getPlayer())->setParent(boughtTeamRoot->getPlayer());
             (boughtTeamRoot->getPlayer())->setTeam(buyerTeam);
            (buyerTeamRoot->getPlayer())->setTeam(nullptr);
+           boughtTeam->setRootInTree(nullptr);
            buyerTeam->setRootInTree(boughtTeamRoot);
         }
     }
