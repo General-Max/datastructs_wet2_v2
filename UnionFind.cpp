@@ -23,40 +23,37 @@ void UnionFind::unionTeams(shared_ptr<Team> boughtTeam, shared_ptr<Team> buyerTe
             newSpirit = (((buyerTeamRoot->getPlayer())->getSpirit()).inv())*
                         (buyerTeam->getTeamSpirit())
                         *((boughtTeamRoot->getPlayer())->getSpirit());
-            boughtTeamRoot->getPlayer()->setSpirit(newSpirit);
-            newSpirit = (buyerTeam->getTeamSpirit()) * (boughtTeam->getTeamSpirit());
-            buyerTeam->setTeamSpirit(newSpirit);
-            boughtTeamRoot->getPlayer()->updateGamesPlayed((-1)*((buyerTeamRoot->getPlayer())->getGamesPlayed()));
+            ( boughtTeamRoot->getPlayer())->setSpirit(newSpirit);
             (boughtTeamRoot->getPlayer())->setParent(buyerTeamRoot->getPlayer());
-            (boughtTeamRoot->getPlayer())->setTeam(nullptr);
-
             if(boughtTeam!=buyerTeam){
                 boughtTeam->setRootInTree(nullptr);
             }
+            (boughtTeamRoot->getPlayer())->setTeam(nullptr);
+            boughtTeamRoot->getPlayer()->updateGamesPlayed((-1)*((buyerTeamRoot->getPlayer())->getGamesPlayed()));
         }
 
         else
         {
+            (buyerTeamRoot->getPlayer())->updateGamesPlayed((-1)*(boughtTeamRoot->getPlayer()->getGamesPlayed()));
            newSpirit = ((buyerTeam->getTeamSpirit())) *
                          ((boughtTeamRoot->getPlayer())->getSpirit());
            (boughtTeamRoot->getPlayer())->setSpirit(newSpirit);
            newSpirit = (((boughtTeamRoot->getPlayer())->getSpirit()).inv()) *
                         ((buyerTeamRoot->getPlayer())->getSpirit());
            (buyerTeamRoot->getPlayer())->setSpirit(newSpirit);
-           newSpirit = (buyerTeam->getTeamSpirit())*((boughtTeam)->getTeamSpirit());
-           (buyerTeam)->setTeamSpirit(newSpirit);
-           (buyerTeamRoot->getPlayer())->updateGamesPlayed((-1)*(boughtTeamRoot->getPlayer()->getGamesPlayed()));
-           (buyerTeamRoot->getPlayer())->setParent(boughtTeamRoot->getPlayer());
+            (buyerTeamRoot->getPlayer())->setParent(boughtTeamRoot->getPlayer());
+
+            buyerTeam->setRootInTree(boughtTeamRoot);
+            boughtTeam->setRootInTree(nullptr);
             (boughtTeamRoot->getPlayer())->setTeam(buyerTeam);
-           (buyerTeamRoot->getPlayer())->setTeam(nullptr);
-           boughtTeam->setRootInTree(nullptr);
-           buyerTeam->setRootInTree(boughtTeamRoot);
+            (buyerTeamRoot->getPlayer())->setTeam(nullptr);
         }
     }
     
     else if(boughtTeamRoot!= nullptr){
         buyerTeam->setRootInTree(boughtTeamRoot);
         (boughtTeamRoot->getPlayer())->setTeam(buyerTeam);
+        boughtTeam->setRootInTree(nullptr);
     }
 
 }

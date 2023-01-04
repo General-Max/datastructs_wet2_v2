@@ -11,7 +11,7 @@
 using std::cout;
 using std::endl;
 
-const int SIZE = 100000;
+const int SIZE = 10;
 const int SIZE_UNION = 4+1;
 
 //functions
@@ -28,8 +28,8 @@ void testUniteUnion(UnionFind* u);
 
 int main()
 {
-    //testHashMap();
-    testUnionFind();
+    testHashMap();
+    //testUnionFind();
 
     return 0;
 }

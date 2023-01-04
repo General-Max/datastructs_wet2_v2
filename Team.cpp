@@ -116,6 +116,7 @@ void Team::updateAfterBuying(shared_ptr<Team> boughtTeam) {
     m_totalPlayersAbility+=boughtTeam->getTotalPlayersAbility();
     m_totalCards+=boughtTeam->getTotalCards();
     m_goalkeepers+=boughtTeam->getGoalkeepers();
+    m_teamSpirit = m_teamSpirit* (boughtTeam->getTeamSpirit());
 }
 
 
