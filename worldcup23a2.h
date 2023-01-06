@@ -21,20 +21,19 @@
 #include "SortTeamById.h"
 #include "SortByAbility.h"
 
-//Points of games
-const int WIN = 3;
-const int DRAW = 1;
-
-//Return map of play match
-const int wasDraw = 0;
-const int team1WonByCapability = 1;
-const int team1WonBySpirit = 2;
-const int team2WonByCapability = 3;
-const int team2WonBySpirit = 4;
-
-
 class world_cup_t {
 private:
+    //Points of games
+    const int WIN = 3;
+    const int DRAW = 1;
+
+    //Return map of play match
+    const int wasDraw = 0;
+    const int team1WonByCapability = 1;
+    const int team1WonBySpirit = 2;
+    const int team2WonByCapability = 3;
+    const int team2WonBySpirit = 4;
+
 	//
 	// Here you may add anything you want
 	//
