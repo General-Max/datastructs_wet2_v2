@@ -11,7 +11,7 @@
 class UnionFind{
 private:
     HashMap allPlayers;
-    //void compressTree();
+
 public:
     UnionFind();
     ~UnionFind() = default;
@@ -20,7 +20,5 @@ public:
     shared_ptr<Player> findPlayer(int playerId);
     shared_ptr<Team> findPlayerTeam(int playerId);
     void addPlayerToTeam(shared_ptr<Player> player, shared_ptr<Team> team);
-    int calculatePlayedGames(int playerId);
-    permutation_t calculateSpirit(int playerId);
 };
 #endif //WET2_UNIONFIND_H

@@ -148,10 +148,17 @@ public:
      */
     void setTotalCards(int newTotalCards);
 
-    void updateAfterBuying(shared_ptr<Team> boughtTeam);
-   /* shared_ptr<PLayer> getNewestPlayer() const;
 
-    void setNewestPlayer(shared_ptr<Player>& newPlayer);*/
+    /**
+     * sets a new total cards of the team
+     * @param newTeamId
+     */
+    void setTeamId(int newTeamId);
+
+    void updateAfterBuying(shared_ptr<Team> boughtTeam);
+
+    void setNewestPlayer(shared_ptr<Player>& newPlayer);
+
 private:
     int m_teamId;
     int m_points;
@@ -162,7 +169,7 @@ private:
     Node* m_rootInTree;
     permutation_t m_teamSpirit;
     bool m_isInGame;
-  //  shared_ptr<Player> m_newestPlayer;
+
 };
 
 #endif //WET2_TEAM_H

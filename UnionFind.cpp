@@ -10,8 +10,6 @@ void UnionFind::makeSet(shared_ptr<Player> player, shared_ptr<Team> team)
 
 void UnionFind::unionTeams(shared_ptr<Team> boughtTeam, shared_ptr<Team> buyerTeam)
 {
-//    std::cout << boughtTeam.get()->getTeamId() <<std::endl;
-//    std::cout << buyerTeam.get()->getTeamId() <<std::endl;
 
     Node* boughtTeamRoot = boughtTeam->getRootInTree();
     Node* buyerTeamRoot = buyerTeam->getRootInTree();
@@ -100,17 +98,12 @@ shared_ptr<Team> UnionFind::findPlayerTeam(int playerId) {
 
         player = parent;
     }
-//    if((tempPlayer!=(playerNode->getPlayer())) && (tempPlayer!=(playerNode->getPlayer())->getParent())) {
-//        (playerNode->getPlayer())->setParent(tempPlayer);
-//        playerNode->getPlayer()->setSpirit(((tempPlayer->getSpirit()).inv()) * totalSpirit);
-//        int newParentGamesPlayed = tempPlayer->getGamesPlayed();
-//        playerNode->getPlayer()->setGamedPlayed(totalGamesPlayed - newParentGamesPlayed);
-//    }
+
     return tempPlayer->getTeam();
 }
 
 void UnionFind::addPlayerToTeam(shared_ptr<Player> player, shared_ptr<Team> team) {
-    //Node* playerNode = allPlayers.findElement(player->getPlayerId());
+
     // in case it is the first player in the team, we should only update its fields
     if(team->getNumOfPlayers() != 0){
         Node* teamRoot = team->getRootInTree();
@@ -123,25 +116,7 @@ void UnionFind::addPlayerToTeam(shared_ptr<Player> player, shared_ptr<Team> team
     }
 }
 
-//int UnionFind::calculatePlayedGames(int playerId) {
-//    int gamesPlayed = 0;
-//    Node* tempNode = allPlayers.findElement(playerId);
-//    while(tempNode != nullptr){
-//        gamesPlayed += (tempNode->getPlayer())->getGamesPlayed();
-//        tempNode = tempNode->getParent();
-//    }
-//    return gamesPlayed;
-//}
-//
-//permutation_t UnionFind::calculateSpirit(int playerId) {
-//    permutation_t partialSpirit = permutation_t::neutral();
-//    Node* tempNode = allPlayers.findElement(playerId);
-//    while(tempNode != nullptr){
-//        partialSpirit = (tempNode->getPlayer())->getSpirit()*partialSpirit;
-//        tempNode = tempNode->getParent();
-//    }
-//    return partialSpirit;
-//}
+
 
 
 

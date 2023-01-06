@@ -55,8 +55,7 @@ permutation_t Team::getTeamSpirit() const {
     return m_teamSpirit;
 }
 
-void Team::setTeamSpirit(permutation_t newTeamSpirit)
-{
+void Team::setTeamSpirit(permutation_t newTeamSpirit){
     m_teamSpirit = newTeamSpirit;
 }
 
@@ -67,14 +66,6 @@ bool Team::getIsInGame() const {
 void Team::setIsInGame(bool isInGame) {
     this->m_isInGame = isInGame;
 }
-//
-//shared_ptr<Player> Team::getNewestPlayer() const {
-//    return this->m_newestPlayer;
-//}
-//
-//void Team::setNewestPlayer(shared_ptr<Player>& newPlayer) {
-//    this->m_newestPlayer = newPlayer;
-//}
 
 void Team::insertPlayer(const shared_ptr<Player> &player) {
     m_numOfPlayers++;
@@ -119,19 +110,7 @@ void Team::updateAfterBuying(shared_ptr<Team> boughtTeam) {
     m_teamSpirit = m_teamSpirit* (boughtTeam->getTeamSpirit());
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void Team::setTeamId(int newTeamId){
+    this->m_teamId = newTeamId;
+}
 

@@ -77,7 +77,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 
 output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
 {
-    //TODO: recheck all the conditions
+
 	if(teamId1 <=0 || teamId2<=0 || teamId1==teamId2){
         return StatusType::INVALID_INPUT;
     }
@@ -102,7 +102,6 @@ output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
     team1->getRootInTree()->getPlayer()->updateGamesPlayed(1);
     team2->getRootInTree()->getPlayer()->updateGamesPlayed(1);
 
-    //probably could do more efficient, but suppose to work TODO recheck
     if(team1Capability > team2Capability){
         team1->updatePoints(WIN);
         return team1WonByCapability;
@@ -134,7 +133,7 @@ output_t<int> world_cup_t::num_played_games_for_player(int playerId)
     if(playersSets.findPlayer(playerId)==nullptr){
         return StatusType::FAILURE;
     }
-    int playedGames = calculatePlayedGames(playerId);   //TODO add proper function or change here
+    int playedGames = calculatePlayedGames(playerId);
 	return playedGames;
 }
 
@@ -147,7 +146,7 @@ StatusType world_cup_t::add_player_cards(int playerId, int cards)
     if(player==nullptr){
         return StatusType::FAILURE;
     }
-    if((playersSets.findPlayerTeam(playerId))->getIsInGame()){ //TODO check the syntax
+    if((playersSets.findPlayerTeam(playerId))->getIsInGame()){
         player->updateCards(cards);
         return StatusType::SUCCESS;
     }
@@ -188,15 +187,7 @@ output_t<int> world_cup_t::get_ith_pointless_ability(int i)
     if(i<0 || i>=teamsTreeByAbility.getSize()){
         return StatusType::FAILURE;
     }
-    return teamsTreeByAbility.select(i+1)->getTeamId(); //TODO recheck if this is how it is used
-//	if(teamsTreeById.isEmpty() || teamsTreeByAbility.isEmpty()){//both suppose to be the same(by size) so check once?
-//        return StatusType::FAILURE;
-//    }
-//    if(i<0 || i>=teamsTreeById.getSize()){
-//        return StatusType::FAILURE;
-//    }
-//
-//	return teamsTreeByAbility.select(i)->getTeamId(); //TODO recheck if this is how it is used
+    return teamsTreeByAbility.select(i+1)->getTeamId();
 }
 
 output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
@@ -204,7 +195,7 @@ output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
     if(playerId<=0){
         return StatusType::INVALID_INPUT;
     }
-    //Todo recheck
+
     shared_ptr<Player> player = playersSets.findPlayer(playerId);
     shared_ptr<Team> playerTeam = playersSets.findPlayerTeam(playerId);
     if(player == nullptr || !(playerTeam->getIsInGame())){
@@ -218,10 +209,10 @@ output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
 
 StatusType world_cup_t::buy_team(int buyerId, int boughtId)
 {
-	// TODO: Your code goes here
     if(buyerId<=0 || boughtId<=0 || buyerId==boughtId){
         return StatusType::INVALID_INPUT;
     }
+
     shared_ptr<Team> buyerTeam = teamsTreeById.find(buyerId);
     shared_ptr<Team> boughtTeam = teamsTreeById.find(boughtId);
     if(buyerTeam== nullptr || boughtTeam==nullptr){
@@ -242,7 +233,7 @@ StatusType world_cup_t::buy_team(int buyerId, int boughtId)
     return StatusType::SUCCESS;
 }
 
-int world_cup_t::calculatePlayedGames(int playerId) {
+int world_cup_t::calculatePlayedGames(int playerId){
     int gamesPlayed = 0;
     shared_ptr<Player> player = playersSets.findPlayer(playerId);
     while(player!=nullptr)
@@ -253,7 +244,7 @@ int world_cup_t::calculatePlayedGames(int playerId) {
     return gamesPlayed;
 }
 
-permutation_t world_cup_t::calculateSpirit(int playerId) {
+permutation_t world_cup_t::calculateSpirit(int playerId){
     permutation_t partialSpirit = permutation_t::neutral();
     shared_ptr<Player> player = playersSets.findPlayer(playerId);
     while(player!=nullptr)

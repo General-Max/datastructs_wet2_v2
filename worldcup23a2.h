@@ -42,6 +42,7 @@ private:
     UnionFind playersSets;
     int calculatePlayedGames(int playerId);
     permutation_t calculateSpirit(int playerId);
+
 public:
 	// <DO-NOT-MODIFY> {
 	
